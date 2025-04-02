@@ -1,4 +1,4 @@
-# BitCard Component Reference for AI Agent
+# BitCard Component
 
 **Purpose:** This document provides a detailed reference for the `BitCard` Blazor UI component. It is intended to be used by an AI agent (like GitHub Copilot, Cursor, etc.) to understand the component's functionality, usage patterns, and API, enabling the agent to provide accurate code suggestions and assistance related to `BitCard`.
 
