@@ -1,323 +1,462 @@
-# BitMenuButton Component Reference
+## BitMenuButton
 
-This document provides a complete reference for the `BitMenuButton` component. It is intended for developers and AI agents alike, serving as a detailed guide for usage, API parameters, and customization. Use this file as a reference when implementing or modifying the menu button in your applications.
+**Overview**
+
+A menu button is a menu item that displays a word or phrase that the user can click to initiate an operation.
+
+**Notes**
+
+* The `BitMenuButton` is a **Multi-API** component.
+* It can accept the list of Items in 3 different ways:
+    1. Using the `BitMenuButtonItem` class.
+    2. Using a Custom Generic class (with `NameSelectors`).
+    3. Using the `BitMenuButtonOption` component.
+
+**(Note:** The provided HTML only details the "Item" (`BitMenuButtonItem`) usage.)
 
 ---
 
-## Overview
+## Usage Examples (Using `BitMenuButtonItem`)
 
-The `BitMenuButton` is a flexible, customizable menu button component designed to render a list of selectable options. It supports various sizes, visual variants, and rich templating options, making it suitable for diverse UI requirements.
+**1. Basic**
 
----
+* **Description**: A standard menu button displaying a list of items.
+* **Code**:
 
-## Usage
+    ```cshtml
+    <BitMenuButton Text="MenuButton" Items="basicItems" />
+    ```
 
-To use the `BitMenuButton` in your Blazor application, include it in your component and supply one or more menu button options:
-
-```razor
-<BitMenuButton Text="Options" DefaultSelectedItem="ItemB" OnChange="@HandleItemChange">
-    <BitMenuButtonOption Text="Item A" Key="A" />
-    <BitMenuButtonOption Text="Item B" Key="B" />
-    <BitMenuButtonOption Text="Item C" Key="C" />
-</BitMenuButton>
-
-@code {
-    private string currentItem = "ItemB";
-
-    private void HandleItemChange(string selectedItem)
-    {
-        currentItem = selectedItem;
-        // Additional logic here...
+    ```csharp
+    @code {
+        private List<BitMenuButtonItem> basicItems =
+        [
+            new() { Text = "Item A", Key = "A" },
+            new() { Text = "Item B", Key = "B", IsEnabled = false },
+            new() { Text = "Item C", Key = "C" }
+        ];
     }
-}
-```
+    ```
 
-*Note:* Replace `HandleItemChange` with your custom event callback to handle selection changes.
+**2. Split**
+
+* **Description**: Demonstrates a split button where the main button area triggers one action (or is the primary item when `Sticky` is used) and the chevron part opens the menu.
+* **Code**:
+
+    ```cshtml
+    <BitMenuButton Text="Split" Items="basicItems" Split />
+    ```
+
+    ```csharp
+    // @code section is the same as the Basic example
+    ```
+
+**3. Variant**
+
+* **Description**: Shows the three visual variants: `Fill` (default), `Outline`, and `Text`, for both standard and split buttons, in enabled and disabled states.
+* **Code**:
+
+    ```cshtml
+    <BitMenuButton Text="Fill" Items="basicItems" Variant="BitVariant.Fill" />
+    <BitMenuButton Text="Outline" Items="basicItems" Variant="BitVariant.Outline" />
+    <BitMenuButton Text="Text" Items="basicItems" Variant="BitVariant.Text" />
+
+    <BitMenuButton Text="Fill" Items="basicItems" Variant="BitVariant.Fill" IsEnabled="false" />
+    <BitMenuButton Text="Outline" Items="basicItems" Variant="BitVariant.Outline" IsEnabled="false" />
+    <BitMenuButton Text="Text" Items="basicItems" Variant="BitVariant.Text" IsEnabled="false" />
+
+    <BitMenuButton Text="Fill" Items="basicItems" Variant="BitVariant.Fill" Split />
+    <BitMenuButton Text="Outline" Items="basicItems" Variant="BitVariant.Outline" Split />
+    <BitMenuButton Text="Text" Items="basicItems" Variant="BitVariant.Text" Split />
+
+    <BitMenuButton Text="Fill" Items="basicItems" Variant="BitVariant.Fill" IsEnabled="false" Split />
+    <BitMenuButton Text="Outline" Items="basicItems" Variant="BitVariant.Outline" IsEnabled="false" Split />
+    <BitMenuButton Text="Text" Items="basicItems" Variant="BitVariant.Text" IsEnabled="false" Split />
+    ```
+
+    ```csharp
+    // @code section is the same as the Basic example
+    ```
+
+**4. Color**
+
+* **Description**: Displays menu buttons using various `BitColor` options (`Primary`, `Secondary`, `Tertiary`, `Info`, `Success`, `Warning`, `SevereWarning`, `Error`, `PrimaryBackground`, `SecondaryBackground`, `TertiaryBackground`, `PrimaryForeground`, `SecondaryForeground`, `TertiaryForeground`, `PrimaryBorder`, `SecondaryBorder`, `TertiaryBorder`) across different variants (`Fill`, `Outline`, `Text`) and modes (standard, split).
+* **Code**: (Shows pattern for one color - Primary)
+
+    ```cshtml
+    <BitMenuButton Text="Primary" Items="basicItems" Variant="BitVariant.Fill" Color="BitColor.Primary" />
+    <BitMenuButton Text="Primary" Items="basicItems" Variant="BitVariant.Outline" Color="BitColor.Primary" />
+    <BitMenuButton Text="Primary" Items="basicItems" Variant="BitVariant.Text" Color="BitColor.Primary" />
+
+    <BitMenuButton Text="Primary" Items="basicItems" Variant="BitVariant.Fill" Color="BitColor.Primary" Split />
+    <BitMenuButton Text="Primary" Items="basicItems" Variant="BitVariant.Outline" Color="BitColor.Primary" Split />
+    <BitMenuButton Text="Primary" Items="basicItems" Variant="BitVariant.Text" Color="BitColor.Primary" Split />
+
+    @* ... other colors follow the same pattern ... *@
+    ```
+
+    ```csharp
+    // @code section is the same as the Basic example
+    ```
+
+**5. Size**
+
+* **Description**: Illustrates the available sizes (`Small`, `Medium`, `Large`) for menu buttons across different variants.
+* **Code**:
+
+    ```cshtml
+    <BitMenuButton Text="Small" Items="basicItems" Variant="BitVariant.Fill" Size="BitSize.Small" />
+    <BitMenuButton Text="Small" Items="basicItems" Variant="BitVariant.Outline" Size="BitSize.Small" />
+    <BitMenuButton Text="Small" Items="basicItems" Variant="BitVariant.Text" Size="BitSize.Small" />
+
+    <BitMenuButton Text="Medium" Items="basicItems" Variant="BitVariant.Fill" Size="BitSize.Medium" />
+    <BitMenuButton Text="Medium" Items="basicItems" Variant="BitVariant.Outline" Size="BitSize.Medium" />
+    <BitMenuButton Text="Medium" Items="basicItems" Variant="BitVariant.Text" Size="BitSize.Medium" />
+
+    <BitMenuButton Text="Large" Items="basicItems" Variant="BitVariant.Fill" Size="BitSize.Large" />
+    <BitMenuButton Text="Large" Items="basicItems" Variant="BitVariant.Outline" Size="BitSize.Large" />
+    <BitMenuButton Text="Large" Items="basicItems" Variant="BitVariant.Text" Size="BitSize.Large" />
+    ```
+
+    ```csharp
+    // @code section is the same as the Basic example
+    ```
+
+**6. Sticky**
+
+* **Description**: When `Sticky` is true, clicking an item updates the main button's text (and potentially icon) to match the selected item. The callout closes, but the button reflects the choice.
+* **Code**:
+
+    ```cshtml
+    <BitMenuButton Items="basicItems" Variant="BitVariant.Fill" Sticky />
+    <BitMenuButton Items="basicItems" Variant="BitVariant.Fill" Split Sticky />
+
+    <BitMenuButton Items="basicItems" Variant="BitVariant.Outline" Sticky />
+    <BitMenuButton Items="basicItems" Variant="BitVariant.Outline" Split Sticky />
+
+    <BitMenuButton Items="basicItems" Variant="BitVariant.Text" Sticky />
+    <BitMenuButton Items="basicItems" Variant="BitVariant.Text" Split Sticky />
+    ```
+
+    ```csharp
+    // @code section is the same as the Basic example
+    ```
+
+**7. Icons**
+
+* **Description**: Shows how to add an icon to the main button (`IconName`) and to individual items (`BitMenuButtonItem.IconName`). Also demonstrates customizing the chevron icon (`ChevronDownIcon`).
+* **Code**:
+
+    ```cshtml
+    <BitMenuButton Text="IconName" Items="basicItemsIcon" IconName="@BitIconName.Edit" />
+    <BitMenuButton Text="ChevronDownIcon" Items="basicItemsIcon" ChevronDownIcon="@BitIconName.DoubleChevronDown" Split />
+    ```
+
+    ```csharp
+    @code {
+        private List<BitMenuButtonItem> basicItemsIcon =
+        [
+            new() { Text = "Item A", Key = "A", IconName = BitIconName.Emoji },
+            new() { Text = "Item B", Key = "B", IconName = BitIconName.Emoji, IsEnabled = false },
+            new() { Text = "Item C", Key = "C", IconName = BitIconName.Emoji2 }
+        ];
+    }
+    ```
+
+**8. Style & Class**
+
+* **Description**: Demonstrates applying custom `Style` and `Class` attributes to the root component, individual items (`BitMenuButtonItem.Style`, `BitMenuButtonItem.Class`), and specific internal elements using the `Styles` and `Classes` parameters.
+* **Code**: (Includes CSS for context)
+
+    ```css
+    .custom-class { margin-inline: 1rem; border-radius: 1rem; border-color: tomato; border-width: 0.25rem; }
+    .custom-class > button { color: tomato; border-color: tomato; background: transparent; }
+    .custom-class > button:hover { background-color: #ff63473b; }
+    .custom-item { color: peachpuff; background-color: tomato; }
+    .custom-button { color: deepskyblue; background: transparent; }
+    .custom-opened .custom-button { color: cornflowerblue; }
+    .custom-callout { border-radius: 1rem; border-color: lightgray; backdrop-filter: blur(20px); background-color: transparent; box-shadow: darkgray 0 0 0.5rem; }
+    .custom-item-button { border-bottom: 1px solid gray; }
+    .custom-item-button:hover { background-color: rgba(255, 255, 255, 0.2); }
+    .custom-callout li:last-child .custom-item-button { border-bottom: none; }
+    ```
+
+    ```cshtml
+    <BitMenuButton Text="Styled Button" Items="basicItems" Style="border-radius: 1rem; margin: 1rem; box-shadow: aqua 0 0 1rem; overflow: hidden;" />
+    <BitMenuButton Text="Classed Button" Items="basicItems" Class="custom-class" Variant="BitVariant.Outline" />
+
+    <BitMenuButton Text="Item Styled & Classed Button" Items="itemStyleClassItems" Variant="BitVariant.Text" />
+
+    <BitMenuButton Text="Classes" Items="basicItems" IconName="@BitIconName.FormatPainter" Variant="BitVariant.Text"
+                   Classes="@(new() { OperatorButton = "custom-button", Opened = "custom-opened", Callout = "custom-callout", ItemButton = "custom-item-button" })" />
+
+    <BitMenuButton Text="Styles" Items="basicItems" IconName="@BitIconName.Brush"
+                   Styles="@(new() { Root = "--button-background: tomato; background: var(--button-background); border-color: var(--button-background); border-radius: 0.25rem;",
+                                     Opened = "--button-background: orangered;",
+                                     OperatorButton = "background: var(--button-background);",
+                                     ItemButton = "background: lightcoral;",
+                                     Callout = "border-radius: 0.25rem; box-shadow: lightgray 0 0 0.5rem;" })" />
+    ```
+
+    ```csharp
+    @code {
+        // ... basicItems definition ...
+
+        private static List<BitMenuButtonItem> itemStyleClassItems =
+        [
+            new() { Text = "Item A (Default)", Key = "A", IconName = BitIconName.Emoji },
+            new() { Text = "Item C (Styled)", Key = "B", IconName = BitIconName.Emoji, Style = "color: tomato; border-color: brown; background-color: peachpuff;" },
+            new() { Text = "Item B (Classed)", Key = "C", IconName = BitIconName.Emoji2, Class = "custom-item" }
+        ];
+    }
+    ```
+
+**9. Templates**
+
+* **Description**: Shows how to customize the button's header (`HeaderTemplate`), the rendering of all items (`ItemTemplate`), or individual items (`BitMenuButtonItem.Template`). `HeaderTemplate` and `Text` are ignored if `Sticky` is true.
+* **Code**:
+
+    ```cshtml
+    <BitMenuButton Items="basicItems">
+        <HeaderTemplate>
+            <div style="font-weight: bold; color: #d13438;">Custom Header!</div>
+        </HeaderTemplate>
+    </BitMenuButton>
+
+    <BitMenuButton Text="Items" Items="itemTemplateItems" Split>
+        <ItemTemplate Context="item">
+            <div class="item-template-box">
+                <span style="color:brown">@item.Text (@item.Key)</span>
+            </div>
+        </ItemTemplate>
+    </BitMenuButton>
+
+    <BitMenuButton Text="Items" Items="itemTemplateItems2" />
+    ```
+
+    ```csharp
+    @code {
+        // ... basicItems definition ...
+
+        private List<BitMenuButtonItem> itemTemplateItems = [ /* ... items ... */ ];
+
+        private List<BitMenuButtonItem> itemTemplateItems2 =
+        [
+            new() { /* ..., */ Template = (item => @<div class="item-template-box" style="color:green">@item.Text (@item.Key)</div>) },
+            new() { /* ..., */ Template = (item => @<div class="item-template-box" style="color:yellow">@item.Text (@item.Key)</div>) },
+            new() { /* ..., */ Template = (item => @<div class="item-template-box" style="color:red">@item.Text (@item.Key)</div>) }
+        ];
+    }
+    ```
+
+**10. Events**
+
+* **Description**: Demonstrates handling `OnClick` (triggered when an item is clicked, or the main button in Split mode) and `OnChange` (triggered when the selected item changes, primarily used with `Sticky` mode). Shows usage with both standard and split buttons, sticky and non-sticky.
+* **Code**:
+
+    ```cshtml
+    <BitMenuButton Text="Items" Items="basicItems"
+                   OnChange="(BitMenuButtonItem item) => eventsChangedItem = item?.Key"
+                   OnClick="(BitMenuButtonItem item) => eventsClickedItem = item?.Key" />
+
+    <BitMenuButton Split Text="Items" Items="basicItemsOnClick"
+                   OnChange="(BitMenuButtonItem item) => eventsChangedItem = item?.Key"
+                   OnClick="@((BitMenuButtonItem item) => eventsClickedItem = "Main button clicked")" />
+
+    <BitMenuButton Sticky Items="basicItems"
+                   OnChange="(BitMenuButtonItem item) => eventsChangedItem = item?.Key"
+                   OnClick="(BitMenuButtonItem item) => eventsClickedItem = item?.Key" />
+
+    <BitMenuButton Sticky Split Items="basicItemsOnClick"
+                   OnChange="(BitMenuButtonItem item) => eventsChangedItem = item?.Key"
+                   OnClick="(BitMenuButtonItem item) => eventsClickedItem = item?.Key" />
+
+    <div>Clicked item: @eventsClickedItem</div>
+    <div>Changed item: @eventsChangedItem</div>
+    ```
+
+    ```csharp
+    @code {
+        private string? eventsClickedItem;
+        private string? eventsChangedItem;
+        // ... basicItems definition ...
+        private List<BitMenuButtonItem> basicItemsOnClick = [ /* ... items ... */ ];
+
+        protected override void OnInitialized() { /* ... attaches item.OnClick handler ... */ }
+    }
+    ```
+
+**11. Binding**
+
+* **Description**: Shows various binding scenarios:
+  * `DefaultSelectedItem`: Sets the initial item displayed in `Sticky` mode.
+  * `@bind-SelectedItem`: Two-way binding for the selected item in `Sticky` mode.
+  * `IsSelected` (on item): Pre-selects an item in `Sticky` mode.
+  * `IsOpen`: One-way binding to control the callout visibility.
+  * `@bind-IsOpen`: Two-way binding to control and monitor the callout visibility.
+* **Code**:
+
+    ```cshtml
+    <BitMenuButton Split Sticky Items="basicItems" DefaultSelectedItem="basicItems[1]" />
+
+    <BitMenuButton Sticky Items="basicItems" @bind-SelectedItem="twoWaySelectedItem" />
+    <BitChoiceGroup Horizontal Items="@choiceGroupItems" @bind-Value="@twoWaySelectedItem" />
+
+    <BitMenuButton Sticky Items="isSelectedItems" />
+
+    <BitMenuButton Sticky Items="basicItems" IsOpen="oneWayIsOpen" />
+    <BitCheckbox Label="One-way IsOpen" @bind-Value="oneWayIsOpen" OnChange="async _ => { await Task.Delay(2000); oneWayIsOpen = false; }" />
+
+    <BitMenuButton Sticky Items="basicItems" @bind-IsOpen="twoWayIsOpen" />
+    <BitCheckbox Label="Two-way IsOpen" @bind-Value="twoWayIsOpen" />
+    ```
+
+    ```csharp
+    @code {
+        private BitMenuButtonItem twoWaySelectedItem = default!;
+        private bool oneWayIsOpen;
+        private bool twoWayIsOpen;
+        // ... basicItems definition ...
+        // ... choiceGroupItems definition (derived from basicItems) ...
+        private List<BitMenuButtonItem> isSelectedItems = [ /* ... items with one IsSelected = true ... */ ];
+
+        protected override void OnInitialized() { twoWaySelectedItem = basicItems[2]; }
+    }
+    ```
+
+**12. RTL**
+
+* **Description**: Demonstrates using the `Dir="BitDir.Rtl"` attribute to render the component and its items in a right-to-left layout.
+* **Code**:
+
+    ```cshtml
+    <BitMenuButton Text="گزینه ها" Dir="BitDir.Rtl" Items="rtlItemsIcon" IconName="@BitIconName.Edit" />
+    <BitMenuButton Text="گزینه ها" Dir="BitDir.Rtl" Items="rtlItemsIcon" ChevronDownIcon="@BitIconName.DoubleChevronDown" Split />
+    ```
+
+    ```csharp
+    @code {
+        private static List<BitMenuButtonItem> rtlItemsIcon =
+        [
+            new() { Text = "گزینه الف", Key = "A", IconName = BitIconName.Emoji },
+            new() { Text = "گزینه ب", Key = "B", IconName = BitIconName.Emoji },
+            new() { Text = "گزینه ج", Key = "C", IconName = BitIconName.Emoji2 }
+        ];
+    }
+    ```
 
 ---
 
 ## API Reference
 
-### BitMenuButton Parameters
+**BitMenuButton Parameters**
 
-| **Name**              | **Type**                           | **Default Value**           | **Description**                                                                                           |
-|-----------------------|------------------------------------|-----------------------------|-----------------------------------------------------------------------------------------------------------|
-| `AriaDescription`     | `string?`                          | `null`                      | Detailed description for screen readers.                                                                |
-| `AriaHidden`          | `bool`                             | `false`                     | If true, adds an `aria-hidden` attribute, instructing screen readers to ignore the menu button.            |
-| `ButtonType`          | `BitButtonType`                    | `null`                      | Sets the `type` attribute of the menu button (e.g., Button, Submit, Reset).                               |
-| `ChevronDownIcon`     | `string?`                          | `null`                      | Icon name for the chevron indicating the dropdown state.                                                |
-| `ChildContent`        | `RenderFragment?`                  | `null`                      | Content of the menu button, usually a collection of `BitMenuButtonOption` components.                      |
-| `Classes`             | `BitMenuButtonClassStyles?`        | `null`                      | Custom CSS classes for styling different parts of the menu button.                                         |
-| `Color`               | `BitColor?`                        | `null`                      | Sets the general color theme of the menu button.                                                          |
-| `DefaultSelectedItem` | `TItem?`                           | `null`                      | The initial item to display as the header.                                                               |
-| `HeaderTemplate`      | `RenderFragment?`                  | `null`                      | Custom template for the header content.                                                                   |
-| `IconName`            | `string?`                          | `null`                      | Icon to display within the header of the menu button.                                                     |
-| `IsOpen`              | `bool`                             | `false`                     | Controls whether the callout menu is open.                                                                |
-| `Items`               | `IEnumerable<TItem>`               | `new List<TItem>()`         | Collection of items to display as menu options.                                                           |
-| `ItemTemplate`        | `RenderFragment<TItem>?`           | `null`                      | Custom template for rendering each item.                                                                  |
-| `NameSelectors`       | `BitMenuButtonNameSelectors<TItem>?`| `null`                     | Defines selectors to extract item properties (e.g., text, icon, key).                                      |
-| `OnClick`             | `EventCallback<MouseEventArgs>`    | –                           | Callback when the menu button header is clicked.                                                         |
-| `OnChange`            | `EventCallback<TItem>`             | –                           | Callback when the selected item changes.                                                                  |
-| `Options`             | `RenderFragment?`                  | `null`                      | Alias for `ChildContent`; used to render the options.                                                     |
-| `SelectedItem`        | `TItem?`                           | `null`                      | The currently selected item that appears as the header.                                                  |
-| `Size`                | `BitSize?`                         | `null`                      | Sets the size of the menu button (Small, Medium, Large).                                                  |
-| `Split`               | `bool`                             | `false`                     | Renders the button as a split button if true.                                                             |
-| `Sticky`              | `bool`                             | `false`                     | If true, the selected item remains as the header after selection.                                         |
-| `Styles`              | `BitMenuButtonClassStyles?`        | `null`                      | Custom CSS styles for the component.                                                                      |
-| `Text`                | `string?`                          | `null`                      | Text to display in the header.                                                                            |
-| `Variant`             | `BitVariant?`                      | `null`                      | Visual variant of the menu button (Fill, Outline, or Text).                                               |
+| Name                  | Type                                   | Default             | Description                                                                     |
+| :-------------------- | :------------------------------------- | :------------------ | :------------------------------------------------------------------------------ |
+| `AriaDescription`     | `string?`                              | `null`              | Detailed description for screen readers.                                        |
+| `AriaHidden`          | `bool`                                 | `false`             | If true, hides the button from screen readers.                                  |
+| `ButtonType`          | `BitButtonType?`                       | `null`              | The `type` attribute of the button (`Button`, `Submit`, `Reset`).               |
+| `ChevronDownIcon`     | `string?`                              | `null`              | Custom icon for the chevron down part.                                          |
+| `ChildContent`        | `RenderFragment?`                      | `null`              | Content for `BitMenuButtonOption` components.                                   |
+| `Classes`             | `BitMenuButtonClassStyles?`            | `null`              | Custom CSS classes for different parts.                                         |
+| `Color`               | `BitColor?`                            | `null`              | General color of the button.                                                    |
+| `DefaultSelectedItem` | `TItem?`                               | `null`              | Default selected item (used with `Sticky`).                                     |
+| `HeaderTemplate`      | `RenderFragment?`                      | `null`              | Custom template for the button's header (ignored if `Sticky` is true).          |
+| `IconName`            | `string?`                              | `null`              | Icon shown inside the button's header.                                          |
+| `IsOpen`              | `bool`                                 | `false`             | Controls the visibility of the callout (use `@bind-IsOpen` for two-way).        |
+| `Items`               | `IEnumerable<TItem>`                   | `new List<TItem>()` | List of items (`BitMenuButtonItem` or custom type) to display.                |
+| `ItemTemplate`        | `RenderFragment<TItem>?`               | `null`              | Custom template for rendering each item.                                        |
+| `NameSelectors`       | `BitMenuButtonNameSelectors<TItem>?` | `null`              | Specifies property names/selectors when using a custom item type (`TItem`).     |
+| `OnClick`             | `EventCallback<MouseEventArgs>`        |                     | Callback when the button header is clicked (or item if not `Split`/`Sticky`).   |
+| `OnChange`            | `EventCallback<TItem>`                 |                     | Callback when the selected item changes (used with `Sticky` or `@bind-Value`). |
+| `Options`             | `RenderFragment?`                      | `null`              | Alias for `ChildContent`.                                                       |
+| `SelectedItem`        | `TItem?`                               | `null`              | The currently selected item (use `@bind-SelectedItem` for two-way).             |
+| `Size`                | `BitSize?`                             | `null`              | Size of the button (`Small`, `Medium`, `Large`).                                |
+| `Split`               | `bool`                                 | `false`             | Renders as a split button if true.                                              |
+| `Sticky`              | `bool`                                 | `false`             | If true, the header updates to show the selected item.                          |
+| `Styles`              | `BitMenuButtonClassStyles?`            | `null`              | Custom CSS styles for different parts.                                          |
+| `Text`                | `string?`                              | `null`              | Text shown inside the button's header (ignored if `Sticky` is true).            |
+| `Variant`             | `BitVariant?`                          | `null`              | Visual variant (`Fill`, `Outline`, `Text`).                                     |
+| *(Inherited)*        | *(See BitComponentBase)*               |                     |                                                                                 |
 
-### BitComponentBase Parameters
+**BitComponentBase Parameters (Inherited)**
 
-The `BitMenuButton` inherits from `BitComponentBase`, which includes:
+| Name           | Type                         | Default                   | Description                                                           |
+| :------------- | :--------------------------- | :------------------------ | :-------------------------------------------------------------------- |
+| `AriaLabel`    | `string?`                    | `null`                    | Aria-label for accessibility.                                         |
+| `Class`        | `string?`                    | `null`                    | Custom CSS class for the root element.                                |
+| `Dir`          | `BitDir?`                    | `null`                    | Component direction (`Ltr`, `Rtl`, `Auto`).                           |
+| `HtmlAttributes`| `Dictionary<string, object>` | `new Dictionary<>()`      | Additional HTML attributes to render.                                 |
+| `Id`           | `string?`                    | `null`                    | Custom ID for the root element (defaults to `UniqueId`).              |
+| `IsEnabled`    | `bool`                       | `true`                    | Whether the component is enabled.                                     |
+| `Style`        | `string?`                    | `null`                    | Custom CSS style for the root element.                                |
+| `Visibility`   | `BitVisibility`              | `BitVisibility.Visible`   | Component visibility (`Visible`, `Hidden`, `Collapsed`).              |
 
-| **Name**           | **Type**                           | **Default Value**                         | **Description**                                                                           |
-|--------------------|------------------------------------|-------------------------------------------|-------------------------------------------------------------------------------------------|
-| `AriaLabel`        | `string?`                          | `null`                                    | Aria-label for the component.                                                             |
-| `Class`            | `string?`                          | `null`                                    | Custom CSS class for the root element.                                                    |
-| `Dir`              | `BitDir?`                          | `null`                                    | Direction (LTR, RTL, or Auto) of the component.                                           |
-| `HtmlAttributes`   | `Dictionary<string, object>`       | `new Dictionary<string, object>()`        | Additional HTML attributes for the root element.                                          |
-| `Id`               | `string?`                          | `null`                                    | Custom id for the component. If null, a unique id is generated.                           |
-| `IsEnabled`        | `bool`                             | `true`                                    | Specifies whether the component is enabled.                                               |
-| `Style`            | `string?`                          | `null`                                    | Custom inline CSS for the root element.                                                   |
-| `Visibility`       | `BitVisibility`                    | `BitVisibility.Visible`                   | Visibility state of the component.                                                        |
+**BitComponentBase Public Members (Inherited)**
 
-### Public Members (BitComponentBase)
+| Name        | Type               | Default          | Description                                       |
+| :---------- | :----------------- | :--------------- | :------------------------------------------------ |
+| `UniqueId`  | `Guid`             | `Guid.NewGuid()` | Readonly unique ID assigned at construction.      |
+| `RootElement` | `ElementReference` |                  | `ElementReference` for the root DOM element.    |
 
-| **Name**     | **Type**             | **Default Value**         | **Description**                                                  |
-|--------------|----------------------|---------------------------|------------------------------------------------------------------|
-| `UniqueId`   | `Guid`               | `Guid.NewGuid()`          | A readonly unique identifier for the component.                  |
-| `RootElement`| `ElementReference`   | –                         | Reference to the root element of the component.                   |
+**BitMenuButtonItem Properties (for `Items` parameter)**
 
----
+| Name       | Type                            | Default | Description                                           |
+| :--------- | :------------------------------ | :------ | :---------------------------------------------------- |
+| `Class`    | `string?`                       | `null`  | Custom CSS class for the item.                      |
+| `IconName` | `string?`                       | `null`  | Icon to render next to the text.                    |
+| `IsEnabled`| `bool`                          | `true`  | Whether the item is enabled.                        |
+| `IsSelected`| `bool`                          | `false` | Selection state (used with `Sticky` binding).       |
+| `Key`      | `string?`                       | `null`  | Unique key for the item.                            |
+| `OnClick`  | `EventCallback`                 |         | Click event handler specifically for this item.       |
+| `Style`    | `string?`                       | `null`  | Custom inline style for the item.                   |
+| `Template` | `RenderFragment<BitMenuButtonItem>?` | `null`  | Custom template to render this specific item.       |
+| `Text`     | `string?`                       | `null`  | Text to display for the item.                       |
 
-## Detailed Subcomponents
+**BitMenuButtonOption Properties (for `ChildContent`/`Options`)**
 
-### BitMenuButtonItem Properties
+*(Similar to `BitMenuButtonItem`, represents items declared as components)*
 
-These properties are for individual menu button items:
+| Name       | Type                                | Default | Description                                         |
+| :--------- | :---------------------------------- | :------ | :-------------------------------------------------- |
+| `Class`    | `string?`                           | `null`  | Custom CSS class for the option.                    |
+| `IconName` | `string?`                           | `null`  | Icon to render next to the text.                  |
+| `IsEnabled`| `bool`                              | `true`  | Whether the option is enabled.                      |
+| `IsSelected`| `bool`                              | `false` | Selection state (used with `Sticky` binding).     |
+| `Key`      | `string?`                           | `null`  | Unique key for the option.                        |
+| `OnClick`  | `EventCallback`                     |         | Click event handler specifically for this option.   |
+| `Style`    | `string?`                           | `null`  | Custom inline style for the option.                 |
+| `Template` | `RenderFragment<BitMenuButtonOption>?` | `null`  | Custom template to render this specific option.   |
+| `Text`     | `string?`                           | `null`  | Text to display for the option.                   |
 
-| **Name**     | **Type**      | **Default Value** | **Description**                                          |
-|--------------|---------------|-------------------|----------------------------------------------------------|
-| `Class`      | `string?`     | `null`            | Custom CSS classes for the item.                         |
-| `IconName`   | `string?`     | `null`            | Icon to display alongside the text.                      |
-| `IsEnabled`  | `bool`        | `true`            | Whether the item is enabled.                             |
-| `IsSelected` | `bool`        | `false`           | Whether the item is currently selected.                  |
-| `Key`        | `string?`     | `null`            | A unique key identifier for the item.                    |
-| `OnClick`    | `EventCallback`| –                 | Click event handler for the item.                        |
-| `Style`      | `string?`     | `null`            | Inline styles for the item.                              |
-| `Template`   | `RenderFragment<BitMenuButtonItem>?` | `null` | Custom template for rendering the item.         |
-| `Text`       | `string?`     | `null`            | The text content of the item.                            |
+**BitMenuButtonClassStyles Properties (for `Classes`/`Styles`)**
 
-### BitMenuButtonOption Properties
+| Name                 | Type      | Default | Description                                                   |
+| :------------------- | :-------- | :------ | :------------------------------------------------------------ |
+| `Root`               | `string?` | `null`  | Style/Class for the root element.                             |
+| `Opened`             | `string?` | `null`  | Style/Class applied when the callout is open.                 |
+| `OperatorButton`     | `string?` | `null`  | Style/Class for the main operator button part.                |
+| `OperatorButtonIcon` | `string?` | `null`  | Style/Class for the icon within the operator button.          |
+| `OperatorButtonText` | `string?` | `null`  | Style/Class for the text within the operator button.          |
+| `Callout`            | `string?` | `null`  | Style/Class for the callout popup element.                    |
+| `CalloutContainer`   | `string?` | `null`  | Style/Class for the container within the callout.             |
+| `ChevronDownButton`  | `string?` | `null`  | Style/Class for the chevron down button (in `Split` mode).    |
+| `ChevronDown`        | `string?` | `null`  | Style/Class for the chevron icon itself.                      |
+| `Separator`          | `string?` | `null`  | Style/Class for the separator line (in `Split` mode).         |
+| `Icon`               | `string?` | `null`  | Style/Class for the main button's icon (`IconName` parameter).|
+| `ItemWrapper`        | `string?` | `null`  | Style/Class for the `<li>` wrapper around each item button.   |
+| `ItemButton`         | `string?` | `null`  | Style/Class for the `<button>` element of each item.          |
+| `ItemIcon`           | `string?` | `null`  | Style/Class for the icon within each item.                    |
+| `ItemText`           | `string?` | `null`  | Style/Class for the text within each item.                    |
+| `Overlay`            | `string?` | `null`  | Style/Class for the overlay shown when the callout is open.   |
+| `Text`               | `string?` | `null`  | Style/Class for the main button's text (`Text` parameter).    |
 
-These properties are similar to BitMenuButtonItem and are used for options:
-
-| **Name**     | **Type**      | **Default Value** | **Description**                                          |
-|--------------|---------------|-------------------|----------------------------------------------------------|
-| `Class`      | `string?`     | `null`            | Custom CSS classes for the option.                       |
-| `IconName`   | `string?`     | `null`            | Icon to display with the option text.                    |
-| `IsEnabled`  | `bool`        | `true`            | Whether the option is enabled.                           |
-| `IsSelected` | `bool`        | `false`           | Whether the option is selected.                          |
-| `Key`        | `string?`     | `null`            | A unique key for the option.                             |
-| `OnClick`    | `EventCallback`| –                 | Click event handler for the option.                      |
-| `Style`      | `string?`     | `null`            | Inline styles for the option.                            |
-| `Template`   | `RenderFragment<BitMenuButtonOption>?` | `null` | Custom template for the option.           |
-| `Text`       | `string?`     | `null`            | The text to display for the option.                      |
-
-### BitMenuButtonClassStyles Properties
-
-Customize the CSS classes and styles for various parts of the menu button:
-
-| **Name**                | **Type**  | **Default Value** | **Description**                                                            |
-|-------------------------|-----------|-------------------|----------------------------------------------------------------------------|
-| `Root`                  | `string?` | `null`            | Custom CSS for the root element.                                           |
-| `Opened`                | `string?` | `null`            | CSS for the callout when it is open.                                       |
-| `OperatorButton`        | `string?` | `null`            | CSS for the operator (side) button.                                        |
-| `OperatorButtonIcon`    | `string?` | `null`            | CSS for the operator button icon.                                          |
-| `OperatorButtonText`    | `string?` | `null`            | CSS for the operator button text.                                          |
-| `Callout`               | `string?` | `null`            | CSS for the callout panel.                                                 |
-| `CalloutContainer`      | `string?` | `null`            | CSS for the container wrapping the callout.                              |
-| `ChevronDownButton`     | `string?` | `null`            | CSS for the chevron button element.                                        |
-| `ChevronDown`           | `string?` | `null`            | CSS for the chevron icon.                                                  |
-| `Separator`             | `string?` | `null`            | CSS for the separator element (if used).                                   |
-| `Icon`                  | `string?` | `null`            | CSS for the icon element in the header.                                    |
-| `ItemWrapper`           | `string?` | `null`            | CSS for wrapping each item.                                                |
-| `ItemButton`            | `string?` | `null`            | CSS for each item’s clickable button.                                      |
-| `ItemIcon`              | `string?` | `null`            | CSS for each item’s icon.                                                  |
-| `ItemText`              | `string?` | `null`            | CSS for the text inside each item.                                         |
-| `Overlay`               | `string?` | `null`            | CSS for the overlay displayed during interactions.                       |
-| `Text`                  | `string?` | `null`            | CSS for the header text.                                                   |
-
-### BitMenuButtonNameSelectors Properties
-
-These selectors help extract item property values from your data:
-
-| **Name**   | **Type**                                               | **Default Value**                                     | **Description**                                                 |
-|------------|--------------------------------------------------------|-------------------------------------------------------|-----------------------------------------------------------------|
-| `Class`    | `BitNameSelectorPair<TItem, string?>`                  | `new(nameof(BitMenuButtonItem.Class))`               | Selector for the CSS class of an item.                          |
-| `IconName` | `BitNameSelectorPair<TItem, string?>`                  | `new(nameof(BitMenuButtonItem.IconName))`            | Selector for the icon name of an item.                           |
-| `IsEnabled`| `BitNameSelectorPair<TItem, bool>`                     | `new(nameof(BitMenuButtonItem.IsEnabled))`           | Selector for the enabled state.                                 |
-| `IsSelected`| `BitNameSelectorPair<TItem, bool>`                    | `new(nameof(BitMenuButtonItem.IsSelected))`          | Selector for the selected state.                                |
-| `Key`      | `BitNameSelectorPair<TItem, string?>`                  | `new(nameof(BitMenuButtonItem.Key))`                 | Selector for the unique key of an item.                          |
-| `OnClick`  | `BitNameSelectorPair<TItem, Action<TItem>?>`           | `new(nameof(BitMenuButtonItem.OnClick))`             | Selector for the item’s click event handler.                    |
-| `Style`    | `BitNameSelectorPair<TItem, string?>`                  | `new(nameof(BitMenuButtonItem.Style))`               | Selector for the item’s inline styles.                          |
-| `Text`     | `BitNameSelectorPair<TItem, string?>`                  | `new(nameof(BitMenuButtonItem.Text))`                | Selector for the item text.                                     |
+**(Note:** Other classes like `BitMenuButtonNameSelectors`, `BitNameSelectorPair` and Enums like `BitButtonType`, `BitColor`, `BitSize`, `BitVariant`, `BitVisibility`, `BitDir` are also documented in the API section with their properties/values and descriptions.)
 
 ---
 
-## Enums
+## Feedback
 
-### BitButtonType Enum
-
-| **Name**  | **Value** | **Description**                                  |
-|-----------|-----------|--------------------------------------------------|
-| `Button`  | `0`       | A standard clickable button.                     |
-| `Submit`  | `1`       | A submit button (for form submissions).          |
-| `Reset`   | `2`       | A reset button (resets form data).               |
-
-### BitColor Enum
-
-| **Name**              | **Value** | **Description**                                 |
-|-----------------------|-----------|-------------------------------------------------|
-| `Primary`             | `0`       | Primary (default) color.                        |
-| `Secondary`           | `1`       | Secondary color.                                |
-| `Tertiary`            | `2`       | Tertiary color.                                 |
-| `Info`                | `3`       | Info color.                                     |
-| `Success`             | `4`       | Success color.                                  |
-| `Warning`             | `5`       | Warning color.                                  |
-| `SevereWarning`       | `6`       | Severe warning color.                           |
-| `Error`               | `7`       | Error color.                                    |
-| `PrimaryBackground`   | `8`       | Primary background color.                       |
-| `SecondaryBackground` | `9`       | Secondary background color.                     |
-| `TertiaryBackground`  | `10`      | Tertiary background color.                      |
-| `PrimaryForeground`   | `11`      | Primary foreground color.                       |
-| `SecondaryForeground` | `12`      | Secondary foreground color.                     |
-| `TertiaryForeground`  | `13`      | Tertiary foreground color.                      |
-| `PrimaryBorder`       | `14`      | Primary border color.                           |
-| `SecondaryBorder`     | `15`      | Secondary border color.                         |
-| `TertiaryBorder`      | `16`      | Tertiary border color.                          |
-
-### BitSize Enum
-
-| **Name**  | **Value** | **Description**           |
-|-----------|-----------|---------------------------|
-| `Small`   | `0`       | Small size.               |
-| `Medium`  | `1`       | Medium size (default).    |
-| `Large`   | `2`       | Large size.               |
-
-### BitVariant Enum
-
-| **Name**  | **Value** | **Description**             |
-|-----------|-----------|-----------------------------|
-| `Fill`    | `0`       | Fill style variant.         |
-| `Outline` | `1`       | Outline style variant.      |
-| `Text`    | `2`       | Text style variant.         |
-
-### BitVisibility Enum
-
-| **Name**    | **Value** | **Description**                                                 |
-|-------------|-----------|-----------------------------------------------------------------|
-| `Visible`   | `0`       | The component is visible.                                       |
-| `Hidden`    | `1`       | The component is hidden (visibility: hidden; space remains).     |
-| `Collapsed` | `2`       | The component is collapsed (display: none).                     |
-
-### BitDir Enum
-
-| **Name** | **Value** | **Description**                                                                        |
-|----------|-----------|----------------------------------------------------------------------------------------|
-| `Ltr`    | `0`       | Left-to-right direction (for languages like English).                                  |
-| `Rtl`    | `1`       | Right-to-left direction (for languages like Arabic).                                   |
-| `Auto`   | `2`       | Auto-detects direction based on content.                                               |
-
----
-
-## Events
-
-The `BitMenuButton` component exposes several event callbacks:
-
-- **OnClick**: Invoked when the menu button header is clicked.
-- **OnChange**: Invoked when the selected item changes.
-- **Item OnClick**: Each item or option can define its own click event.
-
-These callbacks allow you to implement both one-way and two-way data binding for interactive menu behavior.
-
----
-
-## Binding Examples
-
-### Default Selected Item
-
-Set the `DefaultSelectedItem` to pre-select an item:
-
-```razor
-<BitMenuButton DefaultSelectedItem="ItemB">
-    <!-- Define options -->
-</BitMenuButton>
-```
-
-### Two-way Binding
-
-Bind the `SelectedItem` property for dynamic updates:
-
-```razor
-<BitMenuButton @bind-SelectedItem="currentItem">
-    <!-- Define options -->
-</BitMenuButton>
-
-@code {
-    private string currentItem = "ItemB";
-}
-```
-
-### Managing the Open State
-
-Control the callout's open state with the `IsOpen` property:
-
-```razor
-<BitMenuButton @bind-IsOpen="isMenuOpen">
-    <!-- Define options -->
-</BitMenuButton>
-
-@code {
-    private bool isMenuOpen = false;
-}
-```
-
----
-
-## Templates
-
-Customize the component with your own templates:
-
-- **HeaderTemplate**: Override the default header.
-- **ItemTemplate**: Customize how each item or option is rendered.
-
-Example:
-
-```razor
-<BitMenuButton HeaderTemplate="@HeaderContent">
-    <BitMenuButtonOption Text="Option 1" />
-    <BitMenuButtonOption Text="Option 2" />
-</BitMenuButton>
-
-@code {
-    RenderFragment HeaderContent = @<div style="font-weight: bold;">Custom Header</div>;
-}
-```
-
----
-
-## RTL (Right-to-Left) Support
-
-For languages written from right to left, set the `dir` attribute or the `Dir` parameter to `BitDir.Rtl`:
-
-```razor
-<BitMenuButton dir="rtl" Text="گزینه ها">
-    <BitMenuButtonOption Text="گزینه الف" />
-    <BitMenuButtonOption Text="گزینه ب" />
-    <BitMenuButtonOption Text="گزینه ج" />
-</BitMenuButton>
-```
-
----
+* Provide feedback via the **GitHub repo**: [File an Issue](https://github.com/bitfoundation/bitplatform/issues/new/choose) or [Start a Discussion](https://github.com/bitfoundation/bitplatform/discussions/new/choose).
+* Review/Edit this demo page: [Review](https://github.com/bitfoundation/bitplatform/blob/develop/src/BlazorUI/Demo/Client/Bit.BlazorUI.Demo.Client.Core/Pages/Components/Buttons/MenuButton/BitMenuButtonDemo.razor) / [Edit](https://github.com/bitfoundation/bitplatform/edit/develop/src/BlazorUI/Demo/Client/Bit.BlazorUI.Demo.Client.Core/Pages/Components/Buttons/MenuButton/BitMenuButtonDemo.razor)
+* Review/Edit the component source: [Review](https://github.com/bitfoundation/bitplatform/blob/develop/src/BlazorUI/Bit.BlazorUI/Components/Buttons/MenuButton/BitMenuButton.razor) / [Edit](https://github.com/bitfoundation/bitplatform/edit/develop/src/BlazorUI/Bit.BlazorUI/Components/Buttons/MenuButton/BitMenuButton.razor)
