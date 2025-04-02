@@ -1,290 +1,281 @@
-# Icon Component Documentation
+# BitIcon Component 
 
-This document serves as a complete reference for the **Icon** component. The Icon component is used to represent a concept or meaning through a visual symbol. It improves user experience by providing intuitive, user-friendly applications. This file details the component's purpose, usage examples, API parameters, available enumerations, and feedback options.
+**Purpose:** This document provides a detailed reference for the `BitIcon` Blazor UI component. It is intended to be used by an AI agent (like GitHub Copilot, Cursor, etc.) to understand the component's functionality, usage patterns, and API, enabling the agent to provide accurate code suggestions and assistance related to `BitIcon`.
+
+**Source:** This information is derived from the Bit Blazor UI documentation for the `BitIcon` component.
 
 ---
 
 ## Overview
 
-The **Icon** component is designed to visually communicate ideas or actions. It is highly customizable with respect to its color, size, variant, style, and additional HTML attributes. Icons are used throughout the Bit BlazorUI framework to enhance the overall user interface and user experience.
+*   **Component:** `BitIcon`
+*   **Purpose:** Renders an icon element (typically an `<i>` tag with appropriate classes) to visually represent concepts, actions, or objects, enhancing user experience and application clarity. It utilizes a predefined set of icons available through the `BitIconName` static class.
+*   **Library:** Bit Blazor UI (`Bit.BlazorUI`)
 
 ---
 
-## Usage
+## Usage Examples
 
-The Icon component can be used in different ways depending on your needs. Below are several usage examples.
+### 1. Basic Usage
 
-### Basic Usage
+To display an icon, use the `BitIcon` component and specify the desired icon using the `IconName` parameter, referencing constants from the `BitIconName` static class. The `IsEnabled` parameter can be used to render the icon in a disabled state.
 
-The basic usage shows how to display icons using default settings. For instance, you might render several icons with primary styling, and also demonstrate a disabled state:
+```cshtml
+@* Enabled Icons *@
+<BitIcon IconName="@BitIconName.Accept" />
+<BitIcon IconName="@BitIconName.Bus" />
+<BitIcon IconName="@BitIconName.Pinned" />
 
-```html
-<!-- Basic Icon examples -->
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
-<br/><br/>
+<br /><br />
 <div>Disabled</div>
-<br/>
-<i role="img" class="bit-ico bit-dis bit-ico-pri bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-dis bit-ico-pri bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-dis bit-ico-pri bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
+@* Disabled Icons *@
+<BitIcon IconName="@BitIconName.Accept" IsEnabled="false" />
+<BitIcon IconName="@BitIconName.Bus" IsEnabled="false" />
+<BitIcon IconName="@BitIconName.Pinned" IsEnabled="false" />
 ```
 
-### Variant
+* **Note:** A list of available `BitIconName` constants can typically be found in the Bit Blazor UI documentation or explored via IntelliSense.
 
-Icons can adopt different visual variants. The following example shows how to use the Fill, Outline, and Text (default) variants:
+### 2. Variant
 
-```html
-<!-- Variant Examples -->
-<div>Fill</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Accept bit-ico-md bit-ico-fil"></i>
-<br/><br/>
-<div>Outline</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Accept bit-ico-md bit-ico-out"></i>
-<br/><br/>
-<div>Text (default)</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
+The `Variant` parameter controls the visual style of the icon (Fill, Outline, or Text) using the `BitVariant` enum. The default is `BitVariant.Text`.
+
+```cshtml
+@* Fill Variant *@
+<BitIcon IconName="@BitIconName.Accept" Variant="BitVariant.Fill" />
+<br /><br />
+
+@* Outline Variant *@
+<BitIcon IconName="@BitIconName.Accept" Variant="BitVariant.Outline" />
+<br /><br />
+
+@* Text Variant (Default) *@
+<BitIcon IconName="@BitIconName.Accept" Variant="BitVariant.Text" /> @* Or simply <BitIcon IconName="@BitIconName.Accept" /> *@
 ```
 
-### Size
+### 3. Size
 
-Icons can be displayed in multiple sizes. This example demonstrates small, medium, and large icon sizes:
+Adjust the icon size using the `Size` parameter with values from the `BitSize` enum (`Small`, `Medium`, `Large`). The default size is typically `Medium`.
 
-```html
-<!-- Size Examples -->
-<div>Small</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Accept bit-ico-sm bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Bus bit-ico-sm bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Pinned bit-ico-sm bit-ico-txt"></i>
-<br/><br/>
-<div>Medium</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
-<br/><br/>
-<div>Large</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Accept bit-ico-lg bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Bus bit-ico-lg bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Pinned bit-ico-lg bit-ico-txt"></i>
+```cshtml
+@* Small Size *@
+<BitIcon Size="BitSize.Small" IconName="@BitIconName.Accept" />
+<BitIcon Size="BitSize.Small" IconName="@BitIconName.Bus" />
+<BitIcon Size="BitSize.Small" IconName="@BitIconName.Pinned" />
+<br /><br />
+
+@* Medium Size (Default) *@
+<BitIcon Size="BitSize.Medium" IconName="@BitIconName.Accept" />
+<BitIcon Size="BitSize.Medium" IconName="@BitIconName.Bus" />
+<BitIcon Size="BitSize.Medium" IconName="@BitIconName.Pinned" />
+<br /><br />
+
+@* Large Size *@
+<BitIcon Size="BitSize.Large" IconName="@BitIconName.Accept" />
+<BitIcon Size="BitSize.Large" IconName="@BitIconName.Bus" />
+<BitIcon Size="BitSize.Large" IconName="@BitIconName.Pinned" />
 ```
 
-### Color
+### 4. Color
 
-A wide range of color variants is available to provide visual cues corresponding to specific actions or states. The following examples show different color variants:
+Apply semantic colors to the icon using the `Color` parameter with values from the `BitColor` enum. This helps convey meaning (e.g., success, error, warning).
 
-```html
-<!-- Color Examples -->
-<div>Primary</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
-<br/><br/>
-<div>Secondary</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-sec bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-sec bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-sec bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
-<br/><br/>
-<div>Tertiary</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-ter bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-ter bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-ter bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
-<br/><br/>
-<div>Info</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-inf bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-inf bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-inf bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
-<br/><br/>
-<div>Success</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-suc bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-suc bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-suc bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
-<br/><br/>
-<div>Warning</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-wrn bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-wrn bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-wrn bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
-<br/><br/>
-<div>SevereWarning</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-swr bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-swr bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-swr bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
-<br/><br/>
-<div>Error</div>
-<br/>
-<i role="img" class="bit-ico bit-ico-err bit-icon bit-icon--Accept bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-err bit-icon bit-icon--Bus bit-ico-md bit-ico-txt"></i>
-&nbsp;
-<i role="img" class="bit-ico bit-ico-err bit-icon bit-icon--Pinned bit-ico-md bit-ico-txt"></i>
+```cshtml
+@* Primary Color *@
+<BitIcon Color="BitColor.Primary" IconName="@BitIconName.Accept" />
+<BitIcon Color="BitColor.Primary" IconName="@BitIconName.Bus" />
+<BitIcon Color="BitColor.Primary" IconName="@BitIconName.Pinned" />
+<br /><br />
+
+@* Secondary Color *@
+<BitIcon Color="BitColor.Secondary" IconName="@BitIconName.Accept" />
+<BitIcon Color="BitColor.Secondary" IconName="@BitIconName.Bus" />
+<BitIcon Color="BitColor.Secondary" IconName="@BitIconName.Pinned" />
+<br /><br />
+
+@* Tertiary Color *@
+<BitIcon Color="BitColor.Tertiary" IconName="@BitIconName.Accept" />
+<BitIcon Color="BitColor.Tertiary" IconName="@BitIconName.Bus" />
+<BitIcon Color="BitColor.Tertiary" IconName="@BitIconName.Pinned" />
+<br /><br />
+
+@* Info Color *@
+<BitIcon Color="BitColor.Info" IconName="@BitIconName.Accept" />
+<BitIcon Color="BitColor.Info" IconName="@BitIconName.Bus" />
+<BitIcon Color="BitColor.Info" IconName="@BitIconName.Pinned" />
+<br /><br />
+
+@* Success Color *@
+<BitIcon Color="BitColor.Success" IconName="@BitIconName.Accept" />
+<BitIcon Color="BitColor.Success" IconName="@BitIconName.Bus" />
+<BitIcon Color="BitColor.Success" IconName="@BitIconName.Pinned" />
+<br /><br />
+
+@* Warning Color *@
+<BitIcon Color="BitColor.Warning" IconName="@BitIconName.Accept" />
+<BitIcon Color="BitColor.Warning" IconName="@BitIconName.Bus" />
+<BitIcon Color="BitColor.Warning" IconName="@BitIconName.Pinned" />
+<br /><br />
+
+@* SevereWarning Color *@
+<BitIcon Color="BitColor.SevereWarning" IconName="@BitIconName.Accept" />
+<BitIcon Color="BitColor.SevereWarning" IconName="@BitIconName.Bus" />
+<BitIcon Color="BitColor.SevereWarning" IconName="@BitIconName.Pinned" />
+<br /><br />
+
+@* Error Color *@
+<BitIcon Color="BitColor.Error" IconName="@BitIconName.Accept" />
+<BitIcon Color="BitColor.Error" IconName="@BitIconName.Bus" />
+<BitIcon Color="BitColor.Error" IconName="@BitIconName.Pinned" />
 ```
 
-### Style & Class
+### 5. Style & Class
 
-You can customize the Icon component further by applying custom CSS styles or classes.
+Apply custom inline styles using the `Style` parameter or add custom CSS classes using the `Class` parameter for fine-grained control over the icon's appearance.
 
-```html
-<!-- Style & Class Examples -->
-<div>
-  <!-- Icon with inline style -->
-  <i role="img" style="background-color: brown; border-radius: 4px"
-     class="bit-ico bit-ico-pri bit-icon bit-icon--Accept bit-ico-lg bit-ico-txt"></i>
-  <!-- Icon with a custom CSS class -->
-  <i role="img" class="bit-ico bit-ico-pri bit-icon bit-icon--Accept bit-ico-md bit-ico-txt icon-class"></i>
-</div>
+```cshtml
+<style>
+    .icon-class {
+        padding: 4px;
+        font-size: 3rem; /* Overrides default size */
+        margin-left: 1rem;
+        background-color: aquamarine;
+        color: darkblue; /* Overrides default color */
+        border-radius: 50%;
+    }
+</style>
+
+@* Applying inline style *@
+<BitIcon IconName="@BitIconName.Accept" Size="BitSize.Large"
+         Style="background-color: brown; border-radius: 4px; color: white; padding: 2px;" />
+
+@* Applying a custom CSS class *@
+<BitIcon IconName="@BitIconName.Accept" Class="icon-class" />
 ```
 
 ---
 
-## API
+## API Reference
 
-The Icon component API is split into two sections: **BitIcon parameters** and **BitComponentBase parameters**.
+### `BitIcon` Parameters
 
-### BitIcon Parameters
+| Name     | Type         | Default Value | Description                                 |
+| :------- | :----------- | :------------ | :------------------------------------------ |
+| `Color`  | `BitColor?`  | `null`        | The semantic color of the icon.             |
+| `IconName`| `string`     | *Required*    | The name of the icon to display (from `BitIconName`). |
+| `Size`   | `BitSize?`   | `null` (Medium) | The size of the icon (`Small`, `Medium`, `Large`). |
+| `Variant`| `BitVariant?`| `null` (Text)   | The visual variant (`Fill`, `Outline`, `Text`). |
 
-| **Name**   | **Type**        | **Default Value** | **Description**                                         |
-| ---------- | --------------- | ----------------- | ------------------------------------------------------- |
-| Color      | `BitColor?`     | `null`            | The general color of the icon.                        |
-| IconName   | `string`        | *None*            | The icon name to be displayed.                        |
-| Size       | `BitSize?`      | `null`            | The size of the icon.                                   |
-| Variant    | `BitVariant?`   | `null`            | The visual variant of the icon (Fill, Outline, Text).   |
+### Inherited Parameters (`BitComponentBase`)
 
-### BitComponentBase Parameters
+These parameters provide common functionality inherited from the base class.
 
-| **Name**         | **Type**                      | **Default Value**                        | **Description**                                                                                   |
-| ---------------- | ----------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| AriaLabel        | `string?`                     | `null`                                   | The aria-label of the control for screen readers.                                               |
-| Class            | `string?`                     | `null`                                   | Custom CSS class for the root element.                                                          |
-| Dir              | `BitDir?`                     | `null`                                   | Determines the component direction (e.g., Ltr, Rtl, Auto).                                      |
-| HtmlAttributes   | `Dictionary<string, object>`  | `new Dictionary<string, object>()`       | Additional attributes to render on the root element.                                            |
-| Id               | `string?`                     | `null`                                   | Custom id for the root element. If `null`, a unique id will be generated.                        |
-| IsEnabled        | `bool`                        | `true`                                   | Indicates whether the component is enabled.                                                     |
-| Style            | `string?`                     | `null`                                   | Custom CSS style for the root element.                                                          |
-| Visibility       | `BitVisibility`               | `BitVisibility.Visible`                  | Controls whether the component is visible, hidden, or collapsed.                                |
+| Name             | Type                          | Default Value              | Description                                                                                    |
+| :--------------- | :---------------------------- | :------------------------- | :--------------------------------------------------------------------------------------------- |
+| `AriaLabel`      | `string?`                     | `null`                     | Provides an accessible label for screen readers, especially for non-decorative icons.        |
+| `Class`          | `string?`                     | `null`                     | Custom CSS class(es) applied to the root `<i>` element.                                       |
+| `Dir`            | `BitDir?`                     | `null`                     | Sets the directionality (`Ltr`, `Rtl`, `Auto`). Useful if the icon itself implies direction. |
+| `HtmlAttributes` | `Dictionary<string, object>`  | `new Dictionary<>()`       | Captures and renders additional HTML attributes (like `title`) on the root `<i>` element.     |
+| `Id`             | `string?`                     | `null`                     | Custom `id` attribute for the root `<i>` element. If `null`, a unique ID (`UniqueId`) is used. |
+| `IsEnabled`      | `bool`                        | `true`                     | Renders the icon in a disabled visual state (typically greyed out).                          |
+| `Style`          | `string?`                     | `null`                     | Custom inline CSS style(s) applied to the root `<i>` element.                                 |
+| `Visibility`     | `BitVisibility`               | `BitVisibility.Visible`    | Controls the element's visibility using CSS (`Visible`, `Hidden`, `Collapsed`). See enum below. |
 
-### BitComponentBase Public Members
+### Public Members (`BitComponentBase`)
 
-| **Name**    | **Type**            | **Default Value**      | **Description**                                                                              |
-| ----------- | ------------------- | ---------------------- | -------------------------------------------------------------------------------------------- |
-| UniqueId    | `Guid`              | `Guid.NewGuid()`       | A read-only unique identifier for the component instance.                                    |
-| RootElement | `ElementReference`  | *(none)*               | The reference to the root HTML element of the component.                                     |
+These are public properties available on the component instance.
 
----
+| Name          | Type               | Default Value    | Description                                                                           |
+| :------------ | :----------------- | :--------------- | :------------------------------------------------------------------------------------ |
+| `UniqueId`    | `string`           | `Guid.NewGuid()` | Readonly unique identifier generated for the component instance. Used if `Id` is null. |
+| `RootElement` | `ElementReference` |                  | A reference to the rendered root `<i>` element (available after rendering).             |
 
-## Enums
+### Supporting Enums
 
-### BitColor Enum
+#### `BitColor` Enum
 
-| **Name**              | **Value** | **Description**                     |
-| --------------------- | --------- | ----------------------------------- |
-| Primary               | `0`       | Info Primary general color.         |
-| Secondary             | `1`       | Secondary general color.            |
-| Tertiary              | `2`       | Tertiary general color.             |
-| Info                  | `3`       | Info general color.                 |
-| Success               | `4`       | Success general color.              |
-| Warning               | `5`       | Warning general color.              |
-| SevereWarning         | `6`       | SevereWarning general color.        |
-| Error                 | `7`       | Error general color.                |
-| PrimaryBackground     | `8`       | Primary background color.           |
-| SecondaryBackground   | `9`       | Secondary background color.         |
-| TertiaryBackground    | `10`      | Tertiary background color.          |
-| PrimaryForeground     | `11`      | Primary foreground color.           |
-| SecondaryForeground   | `12`      | Secondary foreground color.         |
-| TertiaryForeground    | `13`      | Tertiary foreground color.          |
-| PrimaryBorder         | `14`      | Primary border color.               |
-| SecondaryBorder       | `15`      | Secondary border color.             |
-| TertiaryBorder        | `16`      | Tertiary border color.              |
+Used for the `Color` parameter.
 
-### BitSize Enum
+| Name                | Value | Description                 |
+| :------------------ | :---- | :-------------------------- |
+| `Primary`           | `0`   | Primary theme color.        |
+| `Secondary`         | `1`   | Secondary theme color.      |
+| `Tertiary`          | `2`   | Tertiary theme color.       |
+| `Info`              | `3`   | Informational color.        |
+| `Success`           | `4`   | Success indication color.   |
+| `Warning`           | `5`   | Warning indication color.   |
+| `SevereWarning`     | `6`   | Severe warning color.       |
+| `Error`             | `7`   | Error indication color.     |
+| `PrimaryBackground` | `8`   | Primary background color.   |
+| `SecondaryBackground`| `9`   | Secondary background color. |
+| `TertiaryBackground`| `10`  | Tertiary background color.  |
+| `PrimaryForeground` | `11`  | Primary foreground color.   |
+| `SecondaryForeground`| `12`  | Secondary foreground color. |
+| `TertiaryForeground`| `13`  | Tertiary foreground color.  |
+| `PrimaryBorder`     | `14`  | Primary border color.       |
+| `SecondaryBorder`   | `15`  | Secondary border color.     |
+| `TertiaryBorder`    | `16`  | Tertiary border color.      |
 
-| **Name**  | **Value** | **Description**                      |
-| --------- | --------- | ------------------------------------ |
-| Small     | `0`       | Display icon using small size.       |
-| Medium    | `1`       | Display icon using medium size.      |
-| Large     | `2`       | Display icon using large size.       |
+#### `BitSize` Enum
 
-### BitVariant Enum
+Used for the `Size` parameter.
 
-| **Name**  | **Value** | **Description**                      |
-| --------- | --------- | ------------------------------------ |
-| Fill      | `0`       | Fill styled variant.                 |
-| Outline   | `1`       | Outline styled variant.              |
-| Text      | `2`       | Text styled variant. (Default)       |
+| Name     | Value | Description                  |
+| :------- | :---- | :--------------------------- |
+| `Small`  | `0`   | Renders the icon small.      |
+| `Medium` | `1`   | Renders the icon medium size (default). |
+| `Large`  | `2`   | Renders the icon large.      |
 
-### BitVisibility Enum
+#### `BitVariant` Enum
 
-| **Name**    | **Value** | **Description**                                                      |
-| ----------- | --------- | -------------------------------------------------------------------- |
-| Visible     | `0`       | The component is visible.                                            |
-| Hidden      | `1`       | The component is hidden but occupies space (using `visibility:hidden`).|
-| Collapsed   | `2`       | The component is hidden and does not occupy space (`display:none`).    |
+Used for the `Variant` parameter.
 
-### BitDir Enum
+| Name      | Value | Description                        |
+| :-------- | :---- | :--------------------------------- |
+| `Fill`    | `0`   | Fill styled variant (solid).       |
+| `Outline` | `1`   | Outline styled variant (stroked).  |
+| `Text`    | `2`   | Text styled variant (default, typically inherits text color). |
 
-| **Name** | **Value** | **Description**                                                                                  |
-| -------- | --------- | ------------------------------------------------------------------------------------------------ |
-| Ltr      | `0`       | Left-to-right direction for languages such as English.                                           |
-| Rtl      | `1`       | Right-to-left direction for languages such as Arabic.                                            |
-| Auto     | `2`       | Automatically determines direction based on the content's dominant directionality.                |
+#### `BitVisibility` Enum
 
----
+Used for the inherited `Visibility` parameter.
 
-## Explanation for AI Agent Usage
+| Name        | Value | Description                                                        |
+| :---------- | :---- | :----------------------------------------------------------------- |
+| `Visible`   | `0`   | Element is visible (default).                                      |
+| `Hidden`    | `1`   | Element is hidden (`visibility: hidden;`), still occupies space.   |
+| `Collapsed` | `2`   | Element is hidden (`display: none;`), does not occupy space.       |
 
-This Markdown file is intended as a detailed reference for the **Icon** component. An AI agent using this file should be able to:
+#### `BitDir` Enum
 
-- **Understand Component Purpose:**  
-  Recognize that the Icon component is designed to visually represent actions or states in a user interface.
+Used for the inherited `Dir` parameter.
 
-- **Generate Code Examples:**  
-  Use the provided usage examples to generate similar HTML code snippets with appropriate classes and attributes for different visual variants, sizes, and color themes.
-
-- **Extract API Metadata:**  
-  Reference the API tables to understand parameter names, types, default values, and descriptions. This is useful for code generation, debugging, or dynamic documentation purposes.
-
-- **Interpret Enumerations:**  
-  Utilize the enum definitions (such as for BitColor, BitSize, BitVariant, BitVisibility, and BitDir) to manage visual and layout options in different contexts.
-
-- **Provide Feedback Links:**  
-  Direct users to the GitHub pages for reporting issues, reviewing source code, or suggesting improvements.
-
-This comprehensive documentation is designed to empower both human developers and automated systems to effectively work with and extend the Icon component within the Bit BlazorUI framework.
+| Name   | Value | Description                                     |
+| :----- | :---- | :---------------------------------------------- |
+| `Ltr`  | `0`   | Left-to-right text direction.                   |
+| `Rtl`  | `1`   | Right-to-left text direction.                   |
+| `Auto` | `2`   | Browser determines direction based on content. |
 
 ---
+
+**End of Reference**
+
+**Explanation of the Markdown File:**
+
+1.  **Standard Header:** Identifies the `BitIcon` component and states the document's purpose as an AI reference.
+2.  **Overview:** Provides a concise description of the icon's role in UI/UX.
+3.  **Usage Examples:**
+    *   Each major feature (`Basic`, `Variant`, `Size`, `Color`, `Style & Class`) is demonstrated in its own subsection (`###`).
+    *   Clear explanations introduce each concept (e.g., specifying the icon name, changing visual style, adjusting size, applying color, custom styling).
+    *   Relevant code examples (`cshtml`, `css`) are included in fenced blocks with language identifiers.
+    *   Key parameters (`IconName`, `Variant`, `Size`, `Color`, `Style`, `Class`, `IsEnabled`) and supporting enums (`BitIconName`, `BitVariant`, `BitSize`, `BitColor`) are highlighted in the explanations or code.
+    *   A note clarifies where to find the list of available `BitIconName` values.
+4.  **API Reference:**
+    *   Structured sections for `BitIcon` parameters, inherited `BitComponentBase` parameters, and public members use Markdown tables.
+    *   Parameter details (Name, Type, Default Value, Description) are accurately transcribed from the source HTML. Default values for `Size` and `Variant` are clarified based on observed behavior (Medium, Text). The `IconName` parameter is marked as required.
+    *   The `IconName` type is correctly listed as `string` per the API table, but usage typically involves the `BitIconName` static class constants.
+5.  **Supporting Enums:**
+    *   Dedicated tables clearly define the possible values and descriptions for all relevant enums (`BitColor`, `BitSize`, `BitVariant`, `BitVisibility`, `BitDir`) referenced in the parameters.
+6.  **Formatting and Clarity:** Standard Markdown formatting (headings, code blocks, tables, backticks) ensures readability and easy parsing by AI. The structure flows logically from basic usage to more advanced customization and API details.
+
+This format provides a comprehensive yet easy-to-digest reference for an AI agent, covering how to use the `BitIcon` component effectively with its various customization options and detailing its complete API surface.
