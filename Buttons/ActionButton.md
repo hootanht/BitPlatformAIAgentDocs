@@ -1,19 +1,17 @@
-# ActionButton Component Reference
+# ActionButton Component Documentation
 
-The **ActionButton** is a specialized button component with pre-defined visual styles, behavior, and API properties. It can function as a standard button or an anchor element when a URL is provided. This reference covers all aspects of the component—from basic usage to advanced customization options and API details.
+This document serves as a comprehensive reference for the **ActionButton** component. The ActionButton is a specialized type of button that comes with a distinct set of visual styles and properties. It is designed to enhance user interaction by combining iconography with text, supporting various button states, styles, and behaviors.
 
 ---
 
 ## Overview
 
-The `ActionButton` component is designed to streamline the creation of interactive buttons that integrate seamlessly into your application. It supports:
-
-- **Standard Button Behavior:** Clickable, form-integrated buttons.
-- **Hyperlink Functionality:** Renders as an anchor tag when an `Href` is provided.
-- **Icon Support:** Easily include icons with optional reversed order.
-- **Multiple Visual Variants:** Change colors, sizes, and styles with built-in classes.
-- **Accessibility Features:** ARIA properties, customizable tooltips, and more.
-- **RTL Support:** Full support for right-to-left languages.
+**ActionButton** is a button with built-in icon support and a unique visual style. It offers properties such as:
+- **IconName** to specify the icon to display.
+- **ReversedIcon** to swap the positions of the icon and the button content.
+- **Href** and **Rel** properties to render the button as a hyperlink.
+- Customizable **Color**, **Size**, and styling via **Styles** or **Classes**.
+- Built-in support for different button types (Submit, Reset, Button) and RTL (Right-to-Left) layout.
 
 ---
 
@@ -21,303 +19,466 @@ The `ActionButton` component is designed to streamline the creation of interacti
 
 ### Basic Usage
 
-A basic example of an ActionButton renders as a standard clickable button with an icon and text:
+Below are examples of basic ActionButton usage:
+  
+```cshtml
+<BitActionButton IconName="@BitIconName.AddFriend">
+    Create account
+</BitActionButton>
 
-```html
-<button class="bit-acb bit-acb-pri bit-acb-md">
-  <i class="bit-acb-ico bit-icon bit-icon--AddFriend"></i>
-  <div class="bit-acb-con">Create account</div>
-</button>
+<BitActionButton IconName="@BitIconName.AddFriend" ReversedIcon="true">
+    Reversed Icon
+</BitActionButton>
+
+<BitActionButton IconName="@BitIconName.AddFriend" IsEnabled="false">
+    Disabled
+</BitActionButton>
+
+<BitActionButton>
+    No Icon
+</BitActionButton>
+```
+
+In the rendered output, you will see buttons with an icon (using the `AddFriend` icon), a reversed icon layout, a disabled button state, and a button with no icon.
+
+---
+
+### Href Usage
+
+Use the **Href** property to render the ActionButton as a hyperlink. For example:
+
+```cshtml
+<BitActionButton IconName="@BitIconName.Globe" 
+                 Href="https://bitplatform.dev" 
+                 Target="_blank">
+    Open bitplatform.dev
+</BitActionButton>
+
+<BitActionButton IconName="@BitIconName.Globe" 
+                 Href="https://github.com/bitfoundation/bitplatform">
+    Go to bitplatform GitHub
+</BitActionButton>
 ```
 
 ---
 
-### Using ActionButton as a Link
+### Rel Attribute
 
-By providing an `Href` attribute, the button is rendered as an anchor element, which can open in a new tab or the same window:
+When used as a link, the **Rel** property adds security and SEO attributes to the hyperlink:
 
-```html
-<a class="bit-acb bit-acb-pri bit-acb-md" href="https://bitplatform.dev" target="_blank">
-  <i class="bit-acb-ico bit-icon bit-icon--Globe"></i>
-  <div class="bit-acb-con">Open bitplatform.dev</div>
-</a>
-```
+```cshtml
+<BitActionButton Rel="BitLinkRel.NoFollow" 
+                 Href="https://bitplatform.dev" 
+                 Target="_blank" 
+                 IconName="@BitIconName.Globe">
+    Open bitplatform.dev with a rel attribute (nofollow)
+</BitActionButton>
 
----
-
-### Specifying a `Rel` Attribute
-
-For security and SEO purposes, you may need to include a `rel` attribute:
-
-```html
-<a class="bit-acb bit-acb-pri bit-acb-md" href="https://bitplatform.dev" target="_blank" rel="nofollow noreferrer">
-  <i class="bit-acb-ico bit-icon bit-icon--Globe"></i>
-  <div class="bit-acb-con">Open bitplatform.dev (nofollow &amp; noreferrer)</div>
-</a>
+<BitActionButton Rel="BitLinkRel.NoFollow | BitLinkRel.NoReferrer" 
+                 Href="https://bitplatform.dev" 
+                 Target="_blank" 
+                 IconName="@BitIconName.Globe">
+    Open bitplatform.dev with a rel attribute (nofollow &amp; noreferrer)
+</BitActionButton>
 ```
 
 ---
 
 ### Color Variants
 
-ActionButton comes with a set of predefined color themes. For example, a primary button can be rendered as follows:
+ActionButton supports different predefined colors. Here are some examples:
 
-```html
-<button class="bit-acb bit-acb-pri bit-acb-md">
-  <i class="bit-acb-ico bit-icon bit-icon--ColorSolid"></i>
-  <div class="bit-acb-con">Primary</div>
-</button>
+```cshtml
+<BitActionButton Color="BitColor.Primary" IconName="@BitIconName.ColorSolid">
+    Primary
+</BitActionButton>
+
+<BitActionButton Color="BitColor.Secondary" IconName="@BitIconName.ColorSolid">
+    Secondary
+</BitActionButton>
+
+<BitActionButton Color="BitColor.Tertiary" IconName="@BitIconName.ColorSolid">
+    Tertiary
+</BitActionButton>
+
+<BitActionButton Color="BitColor.Info" IconName="@BitIconName.ColorSolid">
+    Info
+</BitActionButton>
+
+<BitActionButton Color="BitColor.Success" IconName="@BitIconName.ColorSolid">
+    Success
+</BitActionButton>
+
+<BitActionButton Color="BitColor.Warning" IconName="@BitIconName.ColorSolid">
+    Warning
+</BitActionButton>
+
+<BitActionButton Color="BitColor.SevereWarning" IconName="@BitIconName.ColorSolid">
+    SevereWarning
+</BitActionButton>
+
+<BitActionButton Color="BitColor.Error" IconName="@BitIconName.ColorSolid">
+    Error
+</BitActionButton>
+
+<!-- Background variants (rendered on a contrasting background) -->
+<BitActionButton Color="BitColor.PrimaryBackground" IconName="@BitIconName.ColorSolid">
+    PrimaryBackground
+</BitActionButton>
+
+<BitActionButton Color="BitColor.SecondaryBackground" IconName="@BitIconName.ColorSolid">
+    SecondaryBackground
+</BitActionButton>
+
+<BitActionButton Color="BitColor.TertiaryBackground" IconName="@BitIconName.ColorSolid">
+    TertiaryBackground
+</BitActionButton>
+
+<BitActionButton Color="BitColor.PrimaryForeground" IconName="@BitIconName.ColorSolid">
+    PrimaryForeground
+</BitActionButton>
+
+<BitActionButton Color="BitColor.SecondaryForeground" IconName="@BitIconName.ColorSolid">
+    SecondaryForeground
+</BitActionButton>
+
+<BitActionButton Color="BitColor.TertiaryForeground" IconName="@BitIconName.ColorSolid">
+    TertiaryForeground
+</BitActionButton>
+
+<BitActionButton Color="BitColor.PrimaryBorder" IconName="@BitIconName.ColorSolid">
+    PrimaryBorder
+</BitActionButton>
+
+<BitActionButton Color="BitColor.SecondaryBorder" IconName="@BitIconName.ColorSolid">
+    SecondaryBorder
+</BitActionButton>
+
+<BitActionButton Color="BitColor.TertiaryBorder" IconName="@BitIconName.ColorSolid">
+    TertiaryBorder
+</BitActionButton>
 ```
-
-Other available color classes include:
-
-- **Secondary:** `bit-acb-sec`
-- **Tertiary:** `bit-acb-ter`
-- **Info:** `bit-acb-inf`
-- **Success:** `bit-acb-suc`
-- **Warning:** `bit-acb-wrn`
-- **SevereWarning:** `bit-acb-swr`
-- **Error:** `bit-acb-err`
-
-In addition, background and foreground variations can be applied with classes such as `bit-acb-pbg` (Primary Background), `bit-acb-sfg` (Secondary Foreground), etc.
 
 ---
 
-### Size Variants
+### Size
 
-ActionButton supports different sizes to fit various UI needs. Below are examples for small, medium, and large buttons:
+ActionButton can be rendered in different sizes. For example:
 
-```html
-<button class="bit-acb bit-acb-pri bit-acb-sm">
-  <i class="bit-acb-ico bit-icon bit-icon--FontSize"></i>
-  <div class="bit-acb-con">Small</div>
-</button>
+```cshtml
+<BitActionButton Size="BitSize.Small" IconName="@BitIconName.FontSize">
+    Small
+</BitActionButton>
 
-<button class="bit-acb bit-acb-pri bit-acb-md">
-  <i class="bit-acb-ico bit-icon bit-icon--FontSize"></i>
-  <div class="bit-acb-con">Medium</div>
-</button>
+<BitActionButton Size="BitSize.Medium" IconName="@BitIconName.FontSize">
+    Medium
+</BitActionButton>
 
-<button class="bit-acb bit-acb-pri bit-acb-lg">
-  <i class="bit-acb-ico bit-icon bit-icon--FontSize"></i>
-  <div class="bit-acb-con">Large</div>
-</button>
+<BitActionButton Size="BitSize.Large" IconName="@BitIconName.FontSize">
+    Large
+</BitActionButton>
 ```
+
+You can also see the rendered buttons in small, medium, and large sizes.
 
 ---
 
-### Style & Class Customization
+### Style & Class
 
-Customize the appearance of the ActionButton by overriding styles or adding custom CSS classes:
+Customize the appearance of ActionButton using inline styles or external CSS classes. For instance:
 
-```html
-<button style="font-size: 1.5rem;" class="bit-acb bit-acb-pri bit-acb-md">
-  <i style="color: blueviolet;" class="bit-acb-ico bit-icon bit-icon--Brush"></i>
-  <div style="text-shadow: aqua 0 0 1rem;" class="bit-acb-con">
+```cshtml
+<!-- Inline style example -->
+<style>
+  .custom-class {
+      padding: 0.5rem;
+      filter: hue-rotate(45deg);
+      background-color: blueviolet;
+  }
+  
+  .custom-image {
+      width: 16rem;
+      filter: opacity(25%);
+      border-radius: 1rem 3rem;
+  }
+</style>
+
+<BitActionButton IconName="@BitIconName.Brush" 
+                 Styles="@(new BitActionButtonClassStyles { Root = "font-size: 1.5rem;", Icon = "color: blueviolet;" })" 
+                 Src="images/bit-logo-blue.png">
     Action Button Styles
-  </div>
-</button>
-```
+</BitActionButton>
 
-You can also apply custom CSS classes for the root element, icon, or content using the `Classes` and `Styles` properties.
+<BitActionButton IconName="@BitIconName.FormatPainter" 
+                 Classes="@(new BitActionButtonClassStyles { Root = "custom-root", Icon = "custom-icon", Content = "custom-content" })">
+    Action Button Classes (Hover me)
+</BitActionButton>
+```
 
 ---
 
-### Template Customization
+### Template
 
-Integrate custom templates within the ActionButton to include complex layouts or additional elements:
+ActionButton also supports custom templates. You can embed a custom template to change the content layout when needed.
 
-```html
-<button class="bit-acb bit-acb-pri bit-acb-md">
-  <i class="bit-acb-ico bit-icon bit-icon--AddFriend"></i>
-  <div class="bit-acb-con">
-    <div style="display: flex; gap: 0.5rem;">
-      <div>This is a custom template</div>
-      <!-- Additional custom elements, like a loading spinner, can be placed here -->
+```cshtml
+<BitActionButton IconName="@BitIconName.AddFriend">
+    <div style="display:flex; gap:0.5rem;">
+        <div>This is a custom template</div>
+        <BitSpinnerLoading CustomSize="20" />
     </div>
-  </div>
-</button>
+</BitActionButton>
 ```
 
 ---
 
-### Button Types and Form Integration
+### Button Type
 
-ActionButton can act as a submit, reset, or normal button when used inside a form:
+ActionButton can be used within forms and support different HTML button types (Submit, Reset, and standard Button). For example:
 
-```html
-<form novalidate>
-  <!-- Other form elements -->
+```cshtml
+<EditForm Model="validationButtonModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    
+    <BitTextField Label="Required" Required @bind-Value="validationButtonModel.RequiredText" />
+    <ValidationMessage For="() => validationButtonModel.RequiredText" style="color:red" />
+    
+    <BitTextField Label="Nonrequired" @bind-Value="validationButtonModel.NonRequiredText" />
+    
+    <div>
+        <BitActionButton IconName="@BitIconName.SendMirrored" ButtonType="BitButtonType.Submit">
+            Submit
+        </BitActionButton>
+        <BitActionButton IconName="@BitIconName.Reset" ButtonType="BitButtonType.Reset">
+            Reset
+        </BitActionButton>
+        <BitActionButton IconName="@BitIconName.ButtonControl" ButtonType="BitButtonType.Button">
+            Button
+        </BitActionButton>
+    </div>
+</EditForm>
 
-  <button type="submit" class="bit-acb bit-acb-pri bit-acb-md">
-    <i class="bit-acb-ico bit-icon bit-icon--SendMirrored"></i>
-    <div class="bit-acb-con">Submit</div>
-  </button>
-
-  <button type="reset" class="bit-acb bit-acb-pri bit-acb-md">
-    <i class="bit-acb-ico bit-icon bit-icon--Reset"></i>
-    <div class="bit-acb-con">Reset</div>
-  </button>
-
-  <button type="button" class="bit-acb bit-acb-pri bit-acb-md">
-    <i class="bit-acb-ico bit-icon bit-icon--ButtonControl"></i>
-    <div class="bit-acb-con">Button</div>
-  </button>
-</form>
+@code {
+    public class ButtonValidationModel
+    {
+        [Required]
+        public string RequiredText { get; set; } = string.Empty;
+        public string? NonRequiredText { get; set; }
+    }
+    
+    private ButtonValidationModel validationButtonModel = new();
+    
+    private async Task HandleValidSubmit()
+    {
+        await Task.Delay(2000);
+        validationButtonModel = new ButtonValidationModel();
+        StateHasChanged();
+    }
+}
 ```
 
 ---
 
-### Right-to-Left (RTL) Support
+### RTL
 
-For applications that require RTL language support, the ActionButton can be configured with RTL properties:
+Use the **Dir** property to render the button in a right-to-left (RTL) context.
+
+```cshtml
+<BitActionButton Dir="BitDir.Rtl" IconName="@BitIconName.AddFriend">
+    ساخت حساب
+</BitActionButton>
+```
+
+Alternatively, you can set the `dir` attribute on a container:
 
 ```html
 <div dir="rtl">
-  <button class="bit-acb bit-rtl bit-acb-pri bit-acb-md" type="button" dir="rtl">
-    <i class="bit-acb-ico bit-icon bit-icon--AddFriend"></i>
-    <div class="bit-acb-con">ساخت حساب</div>
-  </button>
+    <button class="bit-acb bit-rtl bit-acb-pri bit-acb-md">
+        <i class="bit-acb-ico bit-icon bit-icon--AddFriend"></i>
+        <div class="bit-acb-con">ساخت حساب</div>
+    </button>
 </div>
 ```
 
 ---
 
-## API Reference
-
-Below are the key properties and API details for the ActionButton component.
+## API
 
 ### BitActionButton Parameters
 
-| **Name**             | **Type**                       | **Default** | **Description**                                                                              |
-|----------------------|--------------------------------|-------------|----------------------------------------------------------------------------------------------|
-| AllowDisabledFocus   | `bool`                         | false       | Allows the button to receive focus even when disabled.                                      |
-| AriaDescription      | `string?`                      | null        | Detailed description for assistive technologies.                                             |
-| AriaHidden           | `bool`                         | false       | If true, adds `aria-hidden` to exclude the button from screen readers.                         |
-| ButtonType           | `BitButtonType`                | null        | Specifies the HTML `type` (e.g., button, submit, reset).                                      |
-| ChildContent         | `RenderFragment?`              | null        | The content to be rendered inside the button.                                                |
-| Classes              | `BitActionButtonClassStyles?`  | null        | Custom CSS classes for styling different parts of the button.                                |
-| Color                | `BitColor?`                    | null        | Sets the overall color theme of the button.                                                  |
-| FullWidth            | `bool`                         | false       | Renders the button to fill the full width of its container.                                   |
-| Href                 | `string?`                      | null        | When provided, renders the component as an anchor (`<a>`) element.                             |
-| IconName             | `string?`                      | null        | The name of the icon to be displayed inside the button.                                      |
-| IconOnly             | `bool`                         | null        | Renders only the icon, omitting the text container.                                          |
-| OnClick              | `EventCallback<MouseEventArgs>`|             | Callback executed on the button's click event.                                               |
-| Styles               | `BitActionButtonClassStyles?`  | null        | Inline CSS styles for customizing different parts of the button.                              |
-| ReversedIcon         | `bool`                         | false       | Reverses the positions of the icon and the text.                                             |
-| Rel                  | `BitLinkRel?`                  | null        | Specifies the relationship for anchor links when `Href` is provided.                           |
-| Size                 | `BitSize?`                     | null        | Sets the size of the button (Small, Medium, or Large).                                         |
-| Target               | `string?`                      | null        | Specifies where to open the linked document when using an anchor element.                      |
-| Title                | `string?`                      | null        | Tooltip text displayed on hover.                                                             |
-
----
+| **Name**              | **Type**                              | **Default Value** | **Description**                                                                                          |
+| --------------------- | ------------------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------- |
+| AllowDisabledFocus    | `bool`                                | `false`           | Whether the button can receive focus when disabled.                                                    |
+| AriaDescription       | `string?`                             | `null`            | Provides a detailed description for screen readers.                                                     |
+| AriaHidden            | `bool`                                | `false`           | If true, adds `aria-hidden` to instruct screen readers to ignore the button.                              |
+| ButtonType            | `BitButtonType`                       | `null`            | Specifies the HTML button type (e.g., Button, Submit, Reset).                                             |
+| ChildContent          | `RenderFragment?`                      | `null`            | The content displayed inside the button.                                                                |
+| Classes               | `BitActionButtonClassStyles?`         | `null`            | Custom CSS classes for different parts of the button.                                                   |
+| Color                 | `BitColor?`                           | `null`            | Specifies the general color of the button.                                                              |
+| FullWidth             | `bool`                                | `false`           | If true, renders the button at the full width of its container.                                           |
+| Href                  | `string?`                             | `null`            | When provided, the button renders as an anchor element with the specified URL.                            |
+| IconName              | `string?`                             | `null`            | The name of the icon to display inside the button.                                                      |
+| IconOnly              | `bool`                                | `false`           | If true, only the icon is rendered without any accompanying text.                                         |
+| OnClick               | `EventCallback<MouseEventArgs>`        | `null`            | Callback invoked when the button is clicked.                                                            |
+| Rel                   | `BitLinkRel?`                         | `null`            | Specifies the relationship between the current document and the linked document when used with Href.      |
+| Size                  | `BitSize?`                            | `null`            | Specifies the size of the button (Small, Medium, Large).                                                  |
+| Target                | `string?`                             | `null`            | Specifies the target for the link when the button is rendered as an anchor (e.g., `_blank`).                |
+| Title                 | `string?`                             | `null`            | The tooltip text displayed on hover.                                                                    |
 
 ### BitComponentBase Parameters
 
-| **Name**         | **Type**                            | **Default**                                | **Description**                                                                    |
-|------------------|-------------------------------------|--------------------------------------------|------------------------------------------------------------------------------------|
-| AriaLabel        | `string?`                           | null                                       | Accessible label for the component.                                              |
-| Class            | `string?`                           | null                                       | Custom CSS class for the root element.                                             |
-| Dir              | `BitDir?`                           | null                                       | Specifies text direction (LTR/RTL).                                                |
-| HtmlAttributes   | `Dictionary<string, object>`        | `new Dictionary<string, object>()`         | Additional HTML attributes to be applied to the root element.                      |
-| Id               | `string?`                           | null                                       | Custom id for the root element; if not provided, a unique id is generated.         |
-| IsEnabled        | `bool`                              | true                                       | Determines if the component is interactive.                                      |
-| Style            | `string?`                           | null                                       | Inline styles for the root element.                                                |
-| Visibility       | `BitVisibility`                     | `BitVisibility.Visible`                    | Controls whether the component is visible, hidden, or collapsed.                   |
+| **Name**         | **Type**                              | **Default Value** | **Description**                                                                             |
+| ---------------- | ------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------- |
+| AriaLabel        | `string?`                             | `null`            | The aria-label for accessibility.                                                         |
+| Class            | `string?`                             | `null`            | Custom CSS class for the root element.                                                    |
+| Dir              | `BitDir?`                             | `null`            | Sets the text direction (Ltr, Rtl, or Auto).                                                |
+| HtmlAttributes   | `Dictionary<string, object>`          | `new Dictionary<string, object>()` | Additional HTML attributes for the root element.                                    |
+| Id               | `string?`                             | `null`            | Custom id for the root element. If not provided, a unique id will be generated.             |
+| IsEnabled        | `bool`                                | `true`            | Determines whether the component is enabled.                                              |
+| Style            | `string?`                             | `null`            | Custom CSS style for the root element.                                                      |
+| Visibility       | `BitVisibility`                       | `BitVisibility.Visible` | Controls the visibility of the component.                                             |
+
+### BitComponentBase Public Members
+
+| **Name**    | **Type**             | **Default Value**      | **Description**                                                                              |
+| ----------- | -------------------- | ---------------------- | -------------------------------------------------------------------------------------------- |
+| UniqueId    | `Guid`               | `Guid.NewGuid()`       | A read-only unique identifier for the component instance.                                    |
+| RootElement | `ElementReference`   | *(none)*               | A reference to the root HTML element of the component.                                      |
+
+### BitActionButtonClassStyles Properties
+
+| **Name** | **Type**  | **Default Value** | **Description**                                                       |
+| -------- | --------- | ----------------- | --------------------------------------------------------------------- |
+| Root     | `string?` | `null`            | Custom CSS classes/styles for the root element of the ActionButton.   |
+| Icon     | `string?` | `null`            | Custom CSS classes/styles for the icon within the ActionButton.       |
+| Content  | `string?` | `null`            | Custom CSS classes/styles for the button’s text content.              |
 
 ---
 
-### Public Members
+## Enumerations
 
-| **Name**      | **Type**         | **Default**         | **Description**                                                       |
-|---------------|------------------|---------------------|-----------------------------------------------------------------------|
-| UniqueId      | `Guid`           | `Guid.NewGuid()`    | A read-only unique identifier assigned at component instantiation.   |
-| RootElement   | `ElementReference`|                     | A reference to the component's root HTML element.                   |
+### BitButtonType Enum
 
----
+| **Name**   | **Value** | **Description**                                                  |
+| ---------- | --------- | ---------------------------------------------------------------- |
+| Button     | `0`       | The button acts as a standard clickable button.                  |
+| Submit     | `1`       | The button submits the form data.                                |
+| Reset      | `2`       | The button resets the form data to its initial values.           |
 
-### Enumerations
+### BitColor Enum
 
-#### BitButtonType
+| **Name**             | **Value** | **Description**                                      |
+| -------------------- | --------- | ---------------------------------------------------- |
+| Primary              | `0`       | Primary color for key actions.                       |
+| Secondary            | `1`       | Secondary color for less emphasized actions.         |
+| Tertiary             | `2`       | Tertiary color for alternate emphasis.               |
+| Info                 | `3`       | Informational color.                                 |
+| Success              | `4`       | Indicates successful operations.                   |
+| Warning              | `5`       | Indicates caution or warning.                        |
+| SevereWarning        | `6`       | Indicates severe warnings.                           |
+| Error                | `7`       | Indicates error states.                              |
+| PrimaryBackground    | `8`       | Background color for primary elements.             |
+| SecondaryBackground  | `9`       | Background color for secondary elements.           |
+| TertiaryBackground   | `10`      | Background color for tertiary elements.            |
+| PrimaryForeground    | `11`      | Foreground color for primary elements.             |
+| SecondaryForeground  | `12`      | Foreground color for secondary elements.           |
+| TertiaryForeground   | `13`      | Foreground color for tertiary elements.            |
+| PrimaryBorder        | `14`      | Border color for primary elements.                 |
+| SecondaryBorder      | `15`      | Border color for secondary elements.               |
+| TertiaryBorder       | `16`      | Border color for tertiary elements.                |
 
-| **Name** | **Value** | **Description**                           |
-|----------|-----------|-------------------------------------------|
-| Button   | 0         | A standard clickable button.              |
-| Submit   | 1         | A button that submits form data.          |
-| Reset    | 2         | A button that resets form inputs.         |
+### BitSize Enum
 
----
+| **Name**  | **Value** | **Description**                  |
+| --------- | --------- | -------------------------------- |
+| Small     | `0`       | Renders a small-sized button.    |
+| Medium    | `1`       | Renders a medium-sized button.   |
+| Large     | `2`       | Renders a large-sized button.    |
 
-#### BitColor
+### BitLinkRel Enum
 
-| **Name**              | **Value** | **Description**                        |
-|-----------------------|-----------|----------------------------------------|
-| Primary               | 0         | Primary theme color.                   |
-| Secondary             | 1         | Secondary theme color.                 |
-| Tertiary              | 2         | Tertiary theme color.                  |
-| Info                  | 3         | Informational color.                   |
-| Success               | 4         | Success color.                         |
-| Warning               | 5         | Warning color.                         |
-| SevereWarning         | 6         | Severe warning color.                  |
-| Error                 | 7         | Error color.                           |
-| PrimaryBackground     | 8         | Primary background color.              |
-| SecondaryBackground   | 9         | Secondary background color.            |
-| TertiaryBackground    | 10        | Tertiary background color.             |
-| PrimaryForeground     | 11        | Primary foreground color.              |
-| SecondaryForeground   | 12        | Secondary foreground color.            |
-| TertiaryForeground    | 13        | Tertiary foreground color.             |
-| PrimaryBorder         | 14        | Primary border color.                  |
-| SecondaryBorder       | 15        | Secondary border color.                |
-| TertiaryBorder        | 16        | Tertiary border color.                 |
+| **Name**    | **Value** | **Description**                                                                           |
+| ----------- | --------- | ----------------------------------------------------------------------------------------- |
+| Alternate   | `1`       | Provides a link to an alternate representation (e.g., print version, translation).         |
+| Author      | `2`       | Provides a link to the author of the document.                                             |
+| Bookmark    | `4`       | Provides a permanent URL for bookmarking.                                                 |
+| External    | `8`       | Indicates the linked document is external to the current site.                             |
+| Help        | `16`      | Provides a link to a help document.                                                         |
+| License     | `32`      | Provides a link to licensing information.                                                  |
+| Next        | `64`      | Provides a link to the next document in a sequence.                                         |
+| NoFollow    | `128`     | Tells search engines not to follow the link.                                               |
+| NoOpener    | `256`     | Ensures the new browsing context has no access to the originating window.                  |
+| NoReferrer  | `512`     | Ensures no referrer information is sent when the link is followed.                           |
+| Prev        | `1024`    | Provides a link to the previous document in a sequence.                                    |
+| Search      | `2048`    | Provides a link to a search tool for the document.                                         |
+| Tag         | `4096`    | Specifies a tag (keyword) for the current document.                                        |
 
----
+### BitVisibility Enum
 
-#### BitSize
+| **Name**    | **Value** | **Description**                                                      |
+| ----------- | --------- | -------------------------------------------------------------------- |
+| Visible     | `0`       | The component is visible.                                            |
+| Hidden      | `1`       | The component is hidden but occupies space (using `visibility:hidden`).|
+| Collapsed   | `2`       | The component is hidden and does not occupy any space (`display:none`).|
 
-| **Name** | **Value** | **Description**           |
-|----------|-----------|---------------------------|
-| Small    | 0         | Small sized button.       |
-| Medium   | 1         | Medium sized button.      |
-| Large    | 2         | Large sized button.       |
+### BitDir Enum
 
----
-
-#### BitLinkRel
-
-| **Name**       | **Value** | **Description**                                                                              |
-|----------------|-----------|----------------------------------------------------------------------------------------------|
-| Alternate      | 1         | Provides an alternate representation of the document.                                      |
-| Author         | 2         | Links to the author of the document.                                                        |
-| Bookmark       | 4         | A permanent URL for bookmarking.                                                            |
-| External       | 8         | Indicates the linked document is from an external site.                                     |
-| Help           | 16        | Provides a link to a help document.                                                         |
-| License        | 32        | Provides a link to licensing information.                                                   |
-| Next           | 64        | Points to the next document in a series.                                                    |
-| NoFollow       | 128       | Instructs search engines not to follow the link.                                              |
-| NoOpener       | 256       | Prevents the new browsing context from accessing the originating window.                    |
-| NoReferrer     | 512       | Omits the referrer header when the link is followed.                                          |
-| Prev           | 1024      | Points to the previous document in a series.                                                |
-| Search         | 2048      | Links to a search tool for the document.                                                    |
-| Tag            | 4096      | Provides a tag (keyword) for the document.                                                  |
-
----
-
-#### BitVisibility
-
-| **Name**  | **Value** | **Description**                                                  |
-|-----------|-----------|------------------------------------------------------------------|
-| Visible   | 0         | The component is visible.                                        |
-| Hidden    | 1         | The component is hidden (using `visibility: hidden`) but occupies space. |
-| Collapsed | 2         | The component is removed from the layout (using `display: none`).  |
+| **Name** | **Value** | **Description**                                                                                   |
+| -------- | --------- | ------------------------------------------------------------------------------------------------- |
+| Ltr      | `0`       | Left-to-right layout (e.g., for English).                                                          |
+| Rtl      | `1`       | Right-to-left layout (e.g., for Arabic).                                                           |
+| Auto     | `2`       | Automatically determines text direction based on content.                                        |
 
 ---
 
-#### BitDir
+## Feedback
 
-| **Name** | **Value** | **Description**                                                  |
-|----------|-----------|------------------------------------------------------------------|
-| Ltr      | 0         | Left-to-right text direction (e.g., for English).                |
-| Rtl      | 1         | Right-to-left text direction (e.g., for Arabic).                 |
-| Auto     | 2         | Automatically determines direction based on content.             |
+Your feedback is important to help us improve the ActionButton component. You can share your thoughts or report issues through the following channels:
+
+- **GitHub Repository:**  
+  [View Repository](https://github.com/bitfoundation/bitplatform)
+
+- **File a New Issue:**  
+  [Open Issue](https://github.com/bitfoundation/bitplatform/issues/new/choose)
+
+- **Start a Discussion:**  
+  [New Discussion](https://github.com/bitfoundation/bitplatform/discussions/new/choose)
+
+- **Review/Edit ActionButton Demo:**  
+  [Review Demo](https://github.com/bitfoundation/bitplatform/blob/develop/src/BlazorUI/Demo/Client/Bit.BlazorUI.Demo.Client.Core/Pages/Components/Buttons/ActionButton/BitActionButtonDemo.razor)  
+  [Edit Demo](https://github.com/bitfoundation/bitplatform/edit/develop/src/BlazorUI/Demo/Client/Bit.BlazorUI.Demo.Client.Core/Pages/Components/Buttons/ActionButton/BitActionButtonDemo.razor)
+
+- **Review/Edit ActionButton Component:**  
+  [Review Component](https://github.com/bitfoundation/bitplatform/blob/develop/src/BlazorUI/Bit.BlazorUI/Components/Buttons/ActionButton/BitActionButton.razor)  
+  [Edit Component](https://github.com/bitfoundation/bitplatform/edit/develop/src/BlazorUI/Bit.BlazorUI/Components/Buttons/ActionButton/BitActionButton.razor)
 
 ---
+
+## Explanation for AI Agent Usage
+
+This Markdown reference is designed for an AI agent (or similar documentation tools) to:
+
+- **Understand the Component:**  
+  Identify that **ActionButton** is a specialized button with customizable icon, style, color, size, and behavior settings.
+
+- **Generate Code Examples:**  
+  Use the provided code snippets to generate similar examples, including variations in icon usage, hyperlink rendering (via Href and Rel), size adjustments, custom styling, and RTL layouts.
+
+- **Extract API Information:**  
+  Parse the API tables to retrieve property names, types, default values, and descriptions for both the ActionButton-specific parameters and the base component parameters.
+
+- **Interpret Enumerations:**  
+  Utilize the enum definitions (such as BitButtonType, BitColor, BitSize, BitLinkRel, BitVisibility, and BitDir) to control the visual and behavioral aspects of the button.
+
+- **Apply Custom Styles:**  
+  Leverage the examples and custom class/style tables to modify the look and feel of the button using either inline CSS or external class bindings.
+
+- **Access Feedback Channels:**  
+  Direct users to the appropriate GitHub links to review, report, or contribute to the component.
+
+This complete reference ensures that both developers and automated systems have all the necessary information to effectively implement, customize, and troubleshoot the ActionButton component within the Bit BlazorUI framework.
+
+---
+
+*End of ActionButton Component Documentation.*
