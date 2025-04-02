@@ -1,318 +1,418 @@
-# BitPivot Component Documentation
+<!--
+AI Agent Reference File: BitPivot Component
 
-The **BitPivot** control (and its visual variant, Tab) is designed for navigating between frequently accessed and distinct content categories. It uses text headers (optionally enhanced with icons or counts) to clearly articulate different content sections. When a user taps or clicks on a pivot header, the corresponding content panel is displayed. This component is ideal for applications that need to organize content into multiple views or sections.
+Purpose: This file provides detailed information about the Blazor `BitPivot` component.
+Use this reference when generating, analyzing, or modifying code involving BitPivot.
+Focus on its purpose (tabbed navigation), structure (BitPivot wrapping BitPivotItem), key parameters (SelectedKey, Position, HeaderType, Alignment, OverflowBehavior, HeaderOnly), event handling (OnItemClick, OnChange), and customization options (templates, styles, classes).
+-->
 
----
+# BitPivot Component Reference (Blazor)
 
 ## Overview
 
-The BitPivot control and related tabs are used for:
-- **Navigating Content Views:** Quickly switching between two or more content sections.
-- **Visual Distinction:** Using text, icons, or a combination of both to describe sections.
-- **Flexible Presentation:** Offering several visual variants and size options for optimal design integration.
-- **Responsive Layouts:** Supporting both left-to-right and right-to-left (RTL) languages.
+The `BitPivot` component implements the "tabs" pattern, used for navigating between distinct views or sections of content within the same context. It displays a set of headers (pivots or tabs), and selecting a header reveals its associated content pane.
 
-Tabs represent a visual variant of Pivot where a mix of icons and text (or just icons) can be used to articulate the header labels.
+It's ideal for organizing related but separate information, commonly seen in settings pages, user profiles, dashboards, or any interface requiring distinct content categories accessible from a single location.
+
+**Related Terms:** Tab, TabPage, Tab Control
+
+## Core Concepts
+
+*   **Structure:** The main component is `<BitPivot>`, which acts as a container. Each navigable section is defined by a nested `<BitPivotItem>` component.
+*   **Headers & Content:** Each `<BitPivotItem>` defines both its header (the clickable tab/link) and its body content (what's displayed when the item is selected).
+*   **Selection:** Navigation occurs by clicking on the headers. The `BitPivot` component manages which `BitPivotItem`'s content is currently visible. Selection can be controlled programmatically using keys.
+*   **Declarative Definition:** The primary way to define pivots is by nesting `<BitPivotItem>` components directly within the `<BitPivot>` tag in your Razor markup.
 
 ---
 
 ## Usage
 
-### 1. Basic Pivot
+### Basic Usage
 
-A basic example with three pivot items. Tapping the header navigates to the associated content view.
+Define `<BitPivotItem>` elements inside a `<BitPivot>`. Each item requires at least a `HeaderText` and contains the content for its pane.
 
 ```razor
-<div role="toolbar" class="bit-pvt bit-pvt-md bit-pvt-lnk bit-pvt-non bit-pvt-top">
-  <div class="bit-pvt-hct" role="tablist">
-    <button role="tab" type="button" name="File" data-content="File" class="bit-pvti bit-pvti-sel" tabindex="0" aria-selected="true">
-      <span><span>File</span></span>
-    </button>
-    <button role="tab" type="button" name="Shared with me" data-content="Shared with me" class="bit-pvti" tabindex="-1" aria-selected="false">
-      <span><span>Shared with me</span></span>
-    </button>
-    <button role="tab" type="button" name="Recent" data-content="Recent" class="bit-pvti" tabindex="-1" aria-selected="false">
-      <span><span>Recent</span></span>
-    </button>
-  </div>
-  <div role="tabpanel" class="bit-pvt-cct" aria-labelledby="w309ko">
-    <h3>Pivot #1</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu ligula quis orci accumsan pharetra.</p>
-  </div>
-</div>
+<BitPivot>
+    <BitPivotItem HeaderText="File">
+        <h3>Pivot #1</h3>
+        <p>Content for the File tab.</p>
+    </BitPivotItem>
+    <BitPivotItem HeaderText="Shared with me">
+        <h3>Pivot #2</h3>
+        <p>Content for the Shared tab.</p>
+    </BitPivotItem>
+    <BitPivotItem HeaderText="Recent">
+        <h3>Pivot #3</h3>
+        <p>Content for the Recent tab.</p>
+    </BitPivotItem>
+</BitPivot>
 ```
 
-### 2. Icon and Count
+**Explanation:**
 
-This example demonstrates how to include icons and counts within the pivot header. It helps to visually emphasize the content category.
+* The `<BitPivot>` component manages the overall tab structure and content switching.
+* Each `<BitPivotItem>` represents one tab/pivot.
+* `HeaderText` defines the text shown in the tab header.
+* The content placed inside `<BitPivotItem>` (or within its `<Body>` template) is displayed when that item is active.
+
+### Adding Icons and Item Counts
+
+Enhance headers with icons (`IconName`) and counts (`ItemCount`).
 
 ```razor
-<div role="toolbar" class="bit-pvt bit-pvt-md bit-pvt-lnk bit-pvt-non bit-pvt-top">
-  <div class="bit-pvt-hct" role="tablist">
-    <button role="tab" type="button" name="Files" data-content="Files" class="bit-pvti bit-pvti-sel" tabindex="0" aria-selected="true">
-      <span>
-        <span><i class="bit-icon bit-icon--Info"></i></span>
-        <span>Files</span>
-      </span>
-    </button>
-    <button role="tab" type="button" name="Shared with me" data-content="Shared with me" class="bit-pvti" tabindex="-1" aria-selected="false">
-      <span>
-        <span>Shared with me</span>
-        <span>(32)</span>
-      </span>
-    </button>
-    <button role="tab" type="button" name="Recent" data-content="Recent" class="bit-pvti" tabindex="-1" aria-selected="false">
-      <span>
-        <span><i class="bit-icon bit-icon--Info"></i></span>
-        <span>Recent</span>
-        <span>(12)</span>
-      </span>
-    </button>
-  </div>
-  <div role="tabpanel" class="bit-pvt-cct" aria-labelledby="fu4vs5">
-    <h1>Pivot #1: Files</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras eu ligula quis orci accumsan pharetra.</p>
-  </div>
-</div>
+<BitPivot>
+    <BitPivotItem HeaderText="Files" IconName="@BitIconName.FabricFolder">
+        <h1>Content for Files</h1>
+    </BitPivotItem>
+    <BitPivotItem HeaderText="Shared with me" ItemCount="32">
+        <h1>Content for Shared</h1>
+    </BitPivotItem>
+    <BitPivotItem HeaderText="Recent" IconName="@BitIconName.Recent" ItemCount="12">
+        <h1>Content for Recent</h1>
+    </BitPivotItem>
+</BitPivot>
 ```
 
-### 3. Size Variants
+**Explanation:**
 
-Pivot headers can be rendered in various sizes to suit different UI designs:
+* `IconName`: Specifies a `BitIconName` to display in the header.
+* `ItemCount`: Displays a number (typically in parentheses) next to the header text.
 
-```razor
-<!-- Large Pivot -->
-<div role="toolbar" class="bit-pvt bit-pvt-lg bit-pvt-lnk bit-pvt-non bit-pvt-top">
-  <div class="bit-pvt-hct" role="tablist">
-    <button role="tab" type="button" name="Large File" data-content="Large File" class="bit-pvti bit-pvti-sel" tabindex="0" aria-selected="true">
-      <span><span>Large File</span></span>
-    </button>
-    <!-- Additional items... -->
-  </div>
-  <div role="tabpanel" class="bit-pvt-cct">
-    <h1>Pivot #1: Large File</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-  </div>
-</div>
-```
+### Header Type (`HeaderType`)
 
-### 4. Header Type
-
-Customize the header rendering style. For example, you can render the header as a link:
+Change the visual style of the headers.
 
 ```razor
-<div role="toolbar" class="bit-pvt bit-pvt-md bit-pvt-tab bit-pvt-non bit-pvt-top">
-  <div class="bit-pvt-hct" role="tablist">
-    <button role="tab" type="button" name="File tab" data-content="File tab" class="bit-pvti bit-pvti-sel" tabindex="0" aria-selected="true">
-      <span><span>File tab</span></span>
-    </button>
-    <!-- Additional headers -->
-  </div>
-  <div role="tabpanel" class="bit-pvt-cct">
-    <h1>Pivot #1: File tab</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-  </div>
-</div>
-```
-
-### 5. Data Binding
-
-Pivot supports event callbacks and binding for handling header clicks and selection changes.
-
-**Example with Events:**
-
-```razor
-<BitPivot DefaultSelectedKey="file" OnChange="HandlePivotChange" OnItemClick="HandlePivotClick">
-  <BitPivotItem Key="file" HeaderText="File">
-    <p>Content for File</p>
-  </BitPivotItem>
-  <BitPivotItem Key="shared" HeaderText="Shared with me">
-    <p>Content for Shared with me</p>
-  </BitPivotItem>
-  <BitPivotItem Key="recent" HeaderText="Recent">
-    <p>Content for Recent</p>
-  </BitPivotItem>
+<BitPivot HeaderType="BitPivotHeaderType.Tab">
+    <BitPivotItem HeaderText="File tab"> ... </BitPivotItem>
+    <BitPivotItem HeaderText="Shared with me tab"> ... </BitPivotItem>
+    <BitPivotItem HeaderText="Recent tab"> ... </BitPivotItem>
 </BitPivot>
 
+@* Default is BitPivotHeaderType.Link *@
+<BitPivot HeaderType="BitPivotHeaderType.Link">
+    <BitPivotItem HeaderText="File link"> ... </BitPivotItem>
+    <BitPivotItem HeaderText="Shared with me link"> ... </BitPivotItem>
+    <BitPivotItem HeaderText="Recent link"> ... </BitPivotItem>
+</BitPivot>
+```
+
+**Explanation:**
+
+* `HeaderType="BitPivotHeaderType.Tab"`: Renders headers with a distinct tab-like appearance (often with borders/background).
+* `HeaderType="BitPivotHeaderType.Link"`: (Default) Renders headers as underlined text links.
+
+### Sizing (`Size`)
+
+Control the size (padding, font size) of the pivot headers.
+
+```razor
+<BitPivot Size="BitSize.Small"> ... </BitPivot>
+<BitPivot Size="BitSize.Medium"> ... </BitPivot> @* Default *@
+<BitPivot Size="BitSize.Large"> ... </BitPivot>
+```
+
+**Explanation:**
+
+* `Size="BitSize..."`: Affects the visual size of the tab headers (Small, Medium, Large).
+
+### Header Position (`Position`)
+
+Place the headers relative to the content area.
+
+```razor
+<BitPivot Position="BitPivotPosition.Top"> ... </BitPivot>    @* Default *@
+<BitPivot Position="BitPivotPosition.Bottom"> ... </BitPivot>
+<BitPivot Position="BitPivotPosition.Left"> ... </BitPivot>
+<BitPivot Position="BitPivotPosition.Right"> ... </BitPivot>
+```
+
+**Explanation:**
+
+* `Position="BitPivotPosition..."`: Controls whether headers appear above, below, to the left, or to the right of the content panes.
+
+### Header Alignment (`Alignment`)
+
+Align the headers within their container (especially noticeable when headers don't fill the width/height).
+
+```razor
+<BitPivot Alignment="BitAlignment.Start"> ... </BitPivot>  @* Default (Left for LTR, Right for RTL) *@
+<BitPivot Alignment="BitAlignment.Center"> ... </BitPivot>
+<BitPivot Alignment="BitAlignment.End"> ... </BitPivot>    @* (Right for LTR, Left for RTL) *@
+```
+
+**Explanation:**
+
+* `Alignment="BitAlignment..."`: Aligns the group of headers horizontally (for Top/Bottom position) or vertically (for Left/Right position).
+
+### Binding and Selection (`SelectedKey`, `DefaultSelectedKey`, `OnItemClick`, `OnChange`)
+
+Manage which pivot item is selected. Requires setting a unique `Key` attribute on each `BitPivotItem`.
+
+```razor
+<BitPivot @bind-SelectedKey="currentKey">
+    <BitPivotItem Key="Key1" HeaderText="Item One"> ... </BitPivotItem>
+    <BitPivotItem Key="Key2" HeaderText="Item Two"> ... </BitPivotItem>
+    <BitPivotItem Key="Key3" HeaderText="Item Three"> ... </BitPivotItem>
+</BitPivot>
+
+<BitButton OnClick="() => currentKey = "Key2"">Select Item Two</BitButton>
+
+<hr />
+
+<BitPivot DefaultSelectedKey="Foo" OnChange="HandlePivotChange">
+     <BitPivotItem Key="Foo" HeaderText="Foo"> ... </BitPivotItem>
+     <BitPivotItem Key="Bar" HeaderText="Bar"> ... </BitPivotItem>
+</BitPivot>
+<div>Last Changed To: @lastChangedKey</div>
+
 @code {
+    private string currentKey = "Key1"; // Initial selection for binding example
+    private string lastChangedKey = "Foo"; // Store result from OnChange
+
     private void HandlePivotChange(BitPivotItem item)
     {
-        // Handle pivot item change.
-    }
-    
-    private void HandlePivotClick(BitPivotItem item)
-    {
-        // Handle pivot item click.
+        lastChangedKey = item?.Key;
+        Console.WriteLine($"Pivot changed to: {item?.Key}");
     }
 }
 ```
 
-### 6. Detached Pivot
+**Explanation:**
 
-A detached mode allows the pivot header and its content to be rendered separately. This can be useful if you want more control over layout or animations.
+* `Key`: **Required** on each `BitPivotItem` when using binding or `DefaultSelectedKey`. Must be unique.
+* `DefaultSelectedKey`: Sets the initially selected item by its `Key`.
+* `@bind-SelectedKey`: Provides two-way binding. Clicking a tab updates the bound variable, and changing the variable updates the selected tab.
+* `OnItemClick`: An `EventCallback<BitPivotItem>` triggered whenever *any* pivot header is clicked.
+* `OnChange`: An `EventCallback<BitPivotItem>` triggered only when the *selected* pivot item actually changes.
+
+### Detached Mode (`HeaderOnly`)
+
+Render *only* the pivot headers, without the content panes. Useful when the content associated with each tab is displayed elsewhere in the UI, controlled by the selected key.
 
 ```razor
-<div style="border:1px solid gray; padding:10px;">
-  <p>Hello, I am detached content for the pivot.</p>
+<div style="border:1px solid gray; padding:10px; min-height: 50px;">
+    @* Manually render content based on the selected key *@
+    @if (detachedKey == "Foo") { <div>Content for Foo</div> }
+    else if (detachedKey == "Bar") { <div>Content for Bar</div> }
+    else { <div>Select a tab</div> }
 </div>
+
 <hr />
-<div role="toolbar" class="bit-pvt bit-pvt-md bit-pvt-lnk bit-pvt-non bit-pvt-top">
-  <div class="bit-pvt-hct" role="tablist">
-    <button role="tab" type="button" name="Foo" data-content="Foo" class="bit-pvti bit-pvti-sel" tabindex="0" aria-selected="true">
-      <span><span>Foo</span></span>
-    </button>
-    <button role="tab" type="button" name="Bar" data-content="Bar" class="bit-pvti" tabindex="-1" aria-selected="false">
-      <span><span>Bar</span></span>
-    </button>
-    <button role="tab" type="button" name="Bas" data-content="Bas" class="bit-pvti" tabindex="-1" aria-selected="false">
-      <span><span>Bas</span></span>
-    </button>
-    <button role="tab" type="button" name="Biz" data-content="Biz" class="bit-pvti" tabindex="-1" aria-selected="false">
-      <span><span>Biz</span></span>
-    </button>
-  </div>
-</div>
+
+<BitPivot HeaderOnly="true"
+          DefaultSelectedKey="Foo"
+          OnItemClick="(item => detachedKey = item?.Key)">
+    <BitPivotItem HeaderText="Foo" Key="Foo" />
+    <BitPivotItem HeaderText="Bar" Key="Bar" />
+</BitPivot>
+
+@code {
+    private string detachedKey = "Foo";
+}
 ```
 
-### 7. Right-to-Left (RTL) Support
+**Explanation:**
 
-Pivot can be rendered in RTL mode for languages such as Arabic:
+* `HeaderOnly="true"`: Instructs the `BitPivot` component to *not* render the content area (`.bit-pvt-cct`).
+* You typically use `OnItemClick` or `@bind-SelectedKey` to get the selected item's key and then conditionally render the appropriate content elsewhere on the page.
+
+### Overflow Behavior (`OverflowBehavior`)
+
+How to handle headers when they don't fit in the available space.
 
 ```razor
-<div dir="rtl">
-  <div role="toolbar" class="bit-pvt bit-rtl bit-pvt-md bit-pvt-lnk bit-pvt-scr bit-pvt-top" dir="rtl">
-    <div class="bit-pvt-hct" role="tablist">
-      <button role="tab" type="button" name="اسناد" data-content="اسناد" class="bit-pvti bit-pvti-sel" tabindex="0" aria-selected="true">
-        <span><span><i class="bit-icon bit-icon--Info"></i></span><span>اسناد</span></span>
-      </button>
-      <button role="tab" type="button" name="آخرین ها" data-content="آخرین ها" class="bit-pvti" tabindex="-1" aria-selected="false">
-        <span><span>آخرین ها</span><span>(8)</span></span>
-      </button>
-      <button role="tab" type="button" name="شخصی" data-content="شخصی" class="bit-pvti" tabindex="-1" aria-selected="false">
-        <span><span><i class="bit-icon bit-icon--Info"></i></span><span>شخصی</span><span>(6)</span></span>
-      </button>
-    </div>
-    <div role="tabpanel" class="bit-pvt-cct">
-      <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ است.</p>
-    </div>
-  </div>
+<div style="max-width: 250px; border: 1px dashed blue;">
+    @* Default: None - headers might wrap or overflow *@
+    <BitPivot> <BitPivotItem HeaderText="Very Long Header One" /> ... </BitPivot>
+
+    @* Menu: Items that don't fit go into a dropdown menu *@
+    <BitPivot OverflowBehavior="BitOverflowBehavior.Menu"> <BitPivotItem HeaderText="V L H One" /> ...</BitPivot>
+
+    @* Scroll: A horizontal scrollbar appears for the headers *@
+    <BitPivot OverflowBehavior="BitOverflowBehavior.Scroll"> <BitPivotItem HeaderText="V L H One" /> ... </BitPivot>
+</div>
+```
+
+**Explanation:**
+
+* `OverflowBehavior="BitOverflowBehavior..."`: Controls the behavior (`None`, `Menu`, `Scroll`) when headers exceed the container width (or height for Left/Right positions).
+
+### Right-to-Left (`Dir`)
+
+Renders the component layout and header order for RTL languages.
+
+```razor
+<div dir="rtl"> @* Container div recommended for proper layout *@
+    <BitPivot Dir="BitDir.Rtl">
+        <BitPivotItem HeaderText="فایل"> ... </BitPivotItem>
+        <BitPivotItem HeaderText="اشتراک‌گذاری‌ها"> ... </BitPivotItem>
+    </BitPivot>
 </div>
 ```
 
 ---
 
-## API Reference
+## Customization
 
-### BitPivot Parameters
+### Custom Templates (`<Header>`, `<Body>`)
 
-| Name               | Type                              | Default Value                        | Description                                                                                   |
-|--------------------|-----------------------------------|--------------------------------------|-----------------------------------------------------------------------------------------------|
-| **Alignment**      | `BitAlignment?`                   | `null`                               | Determines the alignment of the header section.                                             |
-| **ChildContent**   | `RenderFragment?`                 | `null`                               | The content of the pivot.                                                                     |
-| **Classes**        | `BitPivotClassStyles?`            | `null`                               | Custom CSS classes for different parts of the pivot.                                          |
-| **DefaultSelectedKey** | `string?`                   | `null`                               | The default selected key for the pivot.                                                       |
-| **HeaderOnly**     | `bool`                            | `false`                              | If true, only the header is rendered (skips the tab panel content).                           |
-| **HeaderType**     | `BitPivotHeaderType`              | `BitPivotHeaderType.Link`            | The type used to render the header items (Link or Tab).                                       |
-| **OnItemClick**    | `EventCallback<BitPivotItem>`     | —                                    | Callback when a pivot item header is clicked.                                                 |
-| **OnChange**       | `EventCallback<BitPivotItem>`     | —                                    | Callback when the selected pivot item changes.                                                |
-| **OverflowBehavior** | `BitOverflowBehavior`           | `BitOverflowBehavior.None`           | Defines what happens when there is not enough room for all pivot headers.                      |
-| **Position**       | `BitPivotPosition`                | `BitPivotPosition.Top`               | The position of the pivot header relative to its content (Top, Bottom, Left, Right).            |
-| **SelectedKey**    | `string?`                        | `null`                               | The key of the currently selected pivot item.                                                 |
-| **Size**           | `BitSize?`                        | `null`                               | The size of the pivot header items (Small, Medium, Large).                                    |
-| **Styles**         | `BitPivotClassStyles?`            | `null`                               | Custom CSS styles for different parts of the pivot.                                           |
+Override the default rendering of individual pivot item headers and/or bodies.
 
-### Inherited BitComponentBase Parameters
+```razor
+<BitPivot>
+    <BitPivotItem>
+        <Header>
+            <span style="color:red; font-weight:bold;">
+                <BitIcon IconName="@BitIconName.Warning" /> Custom Header 1
+            </span>
+        </Header>
+        <Body> @* Or just place content directly in BitPivotItem *@
+            <h1>Custom Content Pane 1</h1>
+        </Body>
+    </BitPivotItem>
+    <BitPivotItem HeaderText="Default Header 2"> @* Can mix with default headers *@
+         <h1>Default Content Pane 2</h1>
+         <p>Using ChildContent implicitly becomes the Body.</p>
+    </BitPivotItem>
+</BitPivot>
+```
 
-| Name             | Type                         | Default Value                      | Description                                                                 |
-|------------------|------------------------------|------------------------------------|-----------------------------------------------------------------------------|
-| **AriaLabel**    | `string?`                    | `null`                             | ARIA label for accessibility.                                             |
-| **Class**        | `string?`                    | `null`                             | Custom CSS class for the root element.                                    |
-| **Dir**          | `BitDir?`                    | `null`                             | Text direction (LTR, RTL, or Auto).                                         |
-| **HtmlAttributes** | `Dictionary<string, object>` | `new Dictionary<string, object>()` | Additional attributes for the root element.                               |
-| **Id**           | `string?`                    | `null`                             | Custom id for the root element; if null, a unique id is generated.          |
-| **IsEnabled**    | `bool`                     | `true`                             | Determines whether the component is enabled.                              |
-| **Style**        | `string?`                    | `null`                             | Inline CSS styles for the root element.                                   |
-| **Visibility**   | `BitVisibility`              | `BitVisibility.Visible`            | Sets the visibility of the component.                                     |
+**Explanation:**
 
-### Public Members
+* Place custom markup inside `<Header>` within a `<BitPivotItem>` to completely control the header's appearance. `HeaderText`, `IconName`, `ItemCount` attributes on the `BitPivotItem` are ignored when a `<Header>` template is used.
+* Place custom markup inside `<Body>` or directly within `<BitPivotItem>` (as `ChildContent`) to define the content pane for that item.
 
-- **UniqueId:** A read-only unique identifier generated during component construction.
-- **RootElement:** An `ElementReference` to the component's root DOM element.
+### Styling (`Style`, `Class`, `Styles`, `Classes`)
 
-### BitPivotClassStyles Properties
+Apply custom CSS.
 
-| Name             | Type      | Default Value | Description                                                                   |
-|------------------|-----------|---------------|-------------------------------------------------------------------------------|
-| **Root**         | `string?` | `null`        | Custom CSS classes for the root element of the pivot.                         |
-| **Header**       | `string?` | `null`        | Custom CSS classes for the pivot header container.                            |
-| **Body**         | `string?` | `null`        | Custom CSS classes for the content panel of the pivot.                        |
-| **HeaderItem**   | `string?` | `null`        | Custom CSS classes for each pivot header item.                                |
-| **SelectedItem** | `string?` | `null`        | Custom CSS classes for the currently selected header item.                    |
-| **HeaderItemContent** | `string?` | `null`    | Custom CSS classes for the content within a header item.                      |
+* **`Style` / `Class`:** Apply to the root `div` element of the `BitPivot` component.
+* **`Styles` / `Classes` Parameters:** Provide `BitPivotClassStyles` objects to target internal elements like `Root`, `Header`, `Body`, `HeaderItem`, `SelectedItem`, `HeaderItemContent`, `HeaderIcon`, `HeaderText`, `HeaderItemCount`.
+
+```razor
+@* Direct Style/Class on root *@
+<BitPivot Style="margin-bottom: 2rem;" Class="my-custom-pivot">
+    ...
+</BitPivot>
+
+@* Granular styling via Styles *@
+<BitPivot Styles="@(new BitPivotClassStyles {
+                      Header = "background-color: #eee; border-bottom: 2px solid blue;",
+                      HeaderItem = "padding: 0.5rem 1rem;",
+                      SelectedItem = "background-color: white; border-bottom: 2px solid transparent; margin-bottom: -2px;",
+                      Body = "padding: 1rem; border: 1px solid #eee; border-top: none;"
+                  })">
+    ...
+</BitPivot>
+
+@* Granular styling via Classes (assuming CSS definitions exist) *@
+<BitPivot Classes="@(new BitPivotClassStyles {
+                      Root = "custom-pivot-root",
+                      HeaderItem = "custom-pivot-header-item",
+                      SelectedItem = "custom-pivot-selected-item",
+                      Body = "custom-pivot-body"
+                  })">
+    ...
+</BitPivot>
+```
+
+---
+
+## Key Parameters (`BitPivot`)
+
+<!-- AI: Focus on these common parameters when generating BitPivot code. -->
+
+| Parameter          | Type                       | Default                    | Description                                                           |
+| :----------------- | :------------------------- | :------------------------- | :-------------------------------------------------------------------- |
+| `ChildContent`     | `RenderFragment?`          | `null`                     | Defines the `<BitPivotItem>` components.                              |
+| `SelectedKey`      | `string?`                  | `null`                     | Key of the selected item. Use `@bind-SelectedKey` for two-way binding. |
+| `DefaultSelectedKey`| `string?`                  | `null`                     | Key of the item selected initially.                                   |
+| `HeaderType`       | `BitPivotHeaderType`       | `BitPivotHeaderType.Link`  | Visual style of the headers (Link or Tab).                            |
+| `Position`         | `BitPivotPosition`         | `BitPivotPosition.Top`     | Position of the header relative to the content (Top, Bottom, Left, Right). |
+| `Alignment`        | `BitAlignment?`            | `null` (`Start`)           | Alignment of the headers within their container.                      |
+| `OverflowBehavior` | `BitOverflowBehavior`      | `BitOverflowBehavior.None` | How to handle headers that don't fit (None, Menu, Scroll).            |
+| `HeaderOnly`       | `bool`                     | `false`                    | If true, only renders the headers, not the content pane container.    |
+| `Size`             | `BitSize?`                 | `null` (`Medium`)          | Size of the header items (Small, Medium, Large).                      |
+| `OnItemClick`      | `EventCallback<BitPivotItem>`| -                          | Callback when any header item is clicked.                             |
+| `OnChange`         | `EventCallback<BitPivotItem>`| -                          | Callback when the selected item changes.                              |
+| `IsEnabled`        | `bool`                     | `true`                     | Enables/disables the entire Pivot control.                            |
+| `Styles`           | `BitPivotClassStyles?`     | `null`                     | Custom inline styles for internal elements.                           |
+| `Classes`          | `BitPivotClassStyles?`     | `null`                     | Custom CSS classes for internal elements.                             |
+| `Dir`              | `BitDir?`                  | `null`                     | Sets the text direction (Ltr, Rtl, Auto).                             |
 
 ---
 
-## Enumerations
+## `BitPivotItem` Parameters
 
-### BitAlignment Enum
+<!-- AI: Use these attributes when defining BitPivotItem elements. -->
 
-| Name      | Value | Description                                |
-|-----------|-------|--------------------------------------------|
-| **Start**       | 0     | Align headers at the start.             |
-| **End**         | 1     | Align headers at the end.               |
-| **Center**      | 2     | Center the headers.                     |
-| **SpaceBetween**| 3     | Distribute headers with space between.  |
-| **SpaceAround** | 4     | Distribute headers with space around.   |
-| **SpaceEvenly** | 5     | Distribute headers evenly.              |
-| **Baseline**    | 6     | Align headers along the baseline.       |
-| **Stretch**     | 7     | Stretch headers to fill the container.  |
-
-### BitPivotHeaderType Enum
-
-| Name | Value | Description                               |
-|------|-------|-------------------------------------------|
-| **Tab**  | 0     | Renders pivot header items as tabs.   |
-| **Link** | 1     | Renders pivot header items as links.  |
-
-### BitSize Enum
-
-| Name    | Value | Description        |
-|---------|-------|--------------------|
-| **Small**   | 0     | The small size.   |
-| **Medium**  | 1     | The medium size.  |
-| **Large**   | 2     | The large size.   |
-
-### BitOverflowBehavior Enum
-
-| Name   | Value | Description                                                             |
-|--------|-------|-------------------------------------------------------------------------|
-| **None** | 0   | Pivot headers will overflow the container.                            |
-| **Menu** | 1   | Displays an overflow menu for headers that do not fit.                  |
-| **Scroll** | 2 | Displays a scroll bar to navigate through the headers.                  |
-
-### BitPivotPosition Enum
-
-| Name  | Value | Description                                       |
-|-------|-------|---------------------------------------------------|
-| **Top**    | 0     | Display the header above the content.         |
-| **Bottom** | 1     | Display the header below the content.         |
-| **Left**   | 2     | Display the header to the left of the content.  |
-| **Right**  | 3     | Display the header to the right of the content. |
-
-### BitVisibility Enum
-
-| Name       | Value | Description                                                       |
-|------------|-------|-------------------------------------------------------------------|
-| **Visible**    | 0     | The component is visible.                                      |
-| **Hidden**     | 1     | The component is hidden (space is reserved; CSS `visibility: hidden`). |
-| **Collapsed**  | 2     | The component is not rendered (CSS `display: none`).           |
-
-### BitDir Enum
-
-| Name  | Value | Description                                                                 |
-|-------|-------|-----------------------------------------------------------------------------|
-| **Ltr**  | 0     | Left-to-right text direction (e.g., English).                             |
-| **Rtl**  | 1     | Right-to-left text direction (e.g., Arabic).                              |
-| **Auto** | 2     | Automatically determines direction based on content.                      |
+| Parameter    | Type                | Default          | Description                                                                 |
+| :----------- | :------------------ | :--------------- | :-------------------------------------------------------------------------- |
+| `ChildContent`| `RenderFragment?`   | `null`           | Content of the item's pane (rendered when selected). Alias of `<Body>`.     |
+| `HeaderText` | `string?`           | `null`           | Text displayed in the header. Ignored if `<Header>` template is used.       |
+| `Key`        | `string?`           | `null`           | **Required for binding/default selection.** Unique identifier for the item. |
+| `IconName`   | `string?`           | `null`           | Icon to display in the header. Ignored if `<Header>` template is used.      |
+| `ItemCount`  | `int`               | `0`              | Count displayed in the header. Ignored if `<Header>` template is used.      |
+| `Header`     | `RenderFragment?`   | `null`           | Custom template for the item's header. Overrides `HeaderText`, etc.       |
+| `Body`       | `RenderFragment?`   | `null`           | Explicit template for the item's content pane. Alias of `ChildContent`.     |
+| `IsEnabled`  | `bool`              | `true`           | Whether this specific item can be selected.                               |
+| `Visible`    | `bool`              | `true`           | Whether this item is rendered in the header list.                         |
+| `Style`      | `string?`           | `null`           | Custom inline style for this item's *header* element.                     |
+| `Class`      | `string?`           | `null`           | Custom CSS class for this item's *header* element.                        |
+| `BodyStyle`  | `string?`           | `null`           | Custom inline style for this item's *body content* container.             |
+| `BodyClass`  | `string?`           | `null`           | Custom CSS class for this item's *body content* container.                |
 
 ---
+
+## Event Handling
+
+* **`OnItemClick(BitPivotItem item)`**: Fires when *any* pivot header is clicked, providing the corresponding `BitPivotItem`. Useful even in `HeaderOnly` mode.
+* **`OnChange(BitPivotItem item)`**: Fires *only* when the *selected* pivot item changes (i.e., a different tab is selected). Provides the newly selected `BitPivotItem`.
+
+---
+
+## API Parameter Tables (Detailed)
+
+*(Includes inherited parameters and class style properties)*
+
+*(Refer to the tables in the provided HTML source, summarized in the sections above.)*
+
+---
+
+## Relevant Enums
+
+* **`BitPivotHeaderType`**: `Link` (default), `Tab`
+* **`BitPivotPosition`**: `Top` (default), `Bottom`, `Left`, `Right`
+* **`BitAlignment`**: `Start` (default), `End`, `Center`, `SpaceBetween`, `SpaceAround`, `SpaceEvenly`, `Baseline`, `Stretch`
+* **`BitOverflowBehavior`**: `None` (default), `Menu`, `Scroll`
+* **`BitSize`**: `Small`, `Medium` (default), `Large`
+* **`BitDir`**: `Ltr`, `Rtl`, `Auto`
+* **`BitVisibility`**: `Visible` (default), `Hidden`, `Collapsed`
+
+---
+
+## AI Agent Guidance Summary
+
+* Use `<BitPivot>` to create tabbed interfaces for navigating between content sections.
+* Define tabs using nested `<BitPivotItem>` components.
+* Each `<BitPivotItem>` needs a way to identify its header (`HeaderText` attribute or `<Header>` template) and contains the content for its pane (directly inside, or in `<Body>` template).
+* **Selection:**
+  * Use `Key` on `<BitPivotItem>` if you need binding or default selection.
+  * Use `DefaultSelectedKey` for initial selection.
+  * Use `@bind-SelectedKey` for two-way programmatic control.
+  * Use `OnChange` event to react to selection changes.
+  * Use `OnItemClick` to react to any header click.
+* **Appearance:**
+  * `HeaderType`: `Link` (default) or `Tab`.
+  * `Position`: `Top` (default), `Bottom`, `Left`, `Right`.
+  * `Alignment`: `Start` (default), `Center`, `End`, etc.
+  * `Size`: `Small`, `Medium` (default), `Large`.
+* **Customization:**
+  * Use `IconName` and `ItemCount` on `<BitPivotItem>` for simple header additions.
+  * Use `<Header>` and `<Body>` templates within `<BitPivotItem>` for full control over rendering.
+  * Use `Style`/`Class` on `<BitPivot>` or `Styles`/`Classes` (`BitPivotClassStyles`) for CSS customization.
+* **Detached Mode:** Use `HeaderOnly="true"` to render only the navigation headers and handle content display externally based on the selected key.
+* **Overflow:** Use `OverflowBehavior` (`None`, `Menu`, `Scroll`) to manage many tabs.
+* **RTL:** Use `Dir="BitDir.Rtl"`.
+
