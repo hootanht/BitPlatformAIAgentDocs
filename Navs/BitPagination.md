@@ -332,3 +332,4 @@ Render the component layout for RTL languages using the `Dir` parameter.
 * **Customization:** Apply `Style`/`Class` to the root, or use `Styles`/`Classes` (`BitPaginationClassStyles`) for granular control over internal elements (buttons, selected state, ellipsis, nav icons).
 * **RTL:** Use `Dir="BitDir.Rtl"` for right-to-left layout.
 * **State:** Use `IsEnabled` (bool) to disable the control.
+
