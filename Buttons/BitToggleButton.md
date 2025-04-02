@@ -1,369 +1,298 @@
-# BitToggleButton Component Reference
+# BitToggleButton Blazor Component
 
-This document provides a comprehensive reference for the `BitToggleButton` component. It is intended for developers and AI agents alike and covers everything from basic usage to advanced customization, API details, and event handling.
+**Objective:** This document provides context and reference information about the `BitToggleButton` Blazor component, based *solely* on the provided HTML documentation extract. Use this information to understand the component's features, generate relevant code snippets, and explain its usage.
+
+**Key Component:** `BitToggleButton`
 
 ---
 
 ## Overview
 
-**ToggleButton** is a type of button that stores and displays a status representing the toggle state of a feature (e.g., muting/unmuting audio). This component offers multiple visual variants, sizes, color themes, and customization options, making it adaptable to diverse UI requirements.
+`BitToggleButton` is a type of button that stores and shows a status representing the toggle state (checked/unchecked) of the component.
 
 ---
 
-## Usage
-
-### Basic
-
-The simplest example of a ToggleButton uses an icon and text to indicate the state (e.g., "Unmuted"). For example:
-
-```html
-<button class="bit-tgb bit-tgb-pri bit-tgb-md bit-tgb-fil" type="button">
-  <i class="bit-tgb-ico bit-icon bit-icon--Microphone"></i>
-  <span class="bit-tgb-btx">Unmuted</span>
-</button>
-```
-
----
-
-### Variant
-
-The ToggleButton supports three visual variants:
-
-- **Fill** (default)
-- **Outline**
-- **Text**
-
-**Enabled Examples:**
-
-```html
-<button class="bit-tgb bit-tgb-pri bit-tgb-md bit-tgb-fil" type="button">Fill</button>
-<button class="bit-tgb bit-tgb-pri bit-tgb-md bit-tgb-otl" type="button">Outline</button>
-<button class="bit-tgb bit-tgb-pri bit-tgb-md bit-tgb-txt" type="button">Text</button>
-```
-
-**Disabled Examples:**
-
-```html
-<button class="bit-tgb bit-dis bit-tgb-pri bit-tgb-md bit-tgb-fil" type="button" tabindex="-1">Fill</button>
-<button class="bit-tgb bit-dis bit-tgb-pri bit-tgb-md bit-tgb-otl" type="button" tabindex="-1">Outline</button>
-<button class="bit-tgb bit-dis bit-tgb-pri bit-tgb-md bit-tgb-txt" type="button" tabindex="-1">Text</button>
-```
-
----
-
-### Size
-
-ToggleButton sizes can be adjusted to fit your design needs.
-
-**Fill Variant:**
-
-```html
-<button class="bit-tgb bit-tgb-pri bit-tgb-sm bit-tgb-fil" type="button">Small</button>
-<button class="bit-tgb bit-tgb-pri bit-tgb-md bit-tgb-fil" type="button">Medium</button>
-<button class="bit-tgb bit-tgb-pri bit-tgb-lg bit-tgb-fil" type="button">Large</button>
-```
-
-**Outline Variant:**
-
-```html
-<button class="bit-tgb bit-tgb-pri bit-tgb-sm bit-tgb-otl" type="button">Small</button>
-<button class="bit-tgb bit-tgb-pri bit-tgb-md bit-tgb-otl" type="button">Medium</button>
-<button class="bit-tgb bit-tgb-pri bit-tgb-lg bit-tgb-otl" type="button">Large</button>
-```
-
-**Text Variant:**
-
-```html
-<button class="bit-tgb bit-tgb-pri bit-tgb-sm bit-tgb-txt" type="button">Small</button>
-<button class="bit-tgb bit-tgb-pri bit-tgb-md bit-tgb-txt" type="button">Medium</button>
-<button class="bit-tgb bit-tgb-pri bit-tgb-lg bit-tgb-txt" type="button">Large</button>
-```
-
----
-
-### Color
-
-The toggle button offers a wide range of color variants to indicate state and hierarchy:
-
-- **Primary**
-- **Secondary**
-- **Tertiary**
-- **Info**
-- **Success**
-- **Warning**
-- **SevereWarning**
-- **Error**
-- **Background Colors**: PrimaryBackground, SecondaryBackground, TertiaryBackground
-- **Foreground Colors**: PrimaryForeground, SecondaryForeground, TertiaryForeground
-- **Border Colors**: PrimaryBorder, SecondaryBorder, TertiaryBorder
-
-**Example:**
-
-```html
-<!-- Primary color -->
-<button class="bit-tgb bit-tgb-pri bit-tgb-md bit-tgb-fil" type="button">Primary</button>
-
-<!-- Secondary color -->
-<button class="bit-tgb bit-tgb-sec bit-tgb-md bit-tgb-fil" type="button">Secondary</button>
-
-<!-- Tertiary color -->
-<button class="bit-tgb bit-tgb-ter bit-tgb-md bit-tgb-fil" type="button">Tertiary</button>
-
-<!-- Disabled example -->
-<button class="bit-tgb bit-dis bit-tgb-pri bit-tgb-md bit-tgb-fil" type="button" tabindex="-1">Primary</button>
-```
-
----
-
-### Style & Class
-
-Override the default styles and classes to tailor the appearance of the ToggleButton.
-
-**Inline Styling Example:**
-
-```html
-<button style="background-color: transparent; border-color: blueviolet; color: blueviolet;"
-        class="bit-tgb bit-tgb-pri bit-tgb-md bit-tgb-otl" type="button">
-  <i class="bit-tgb-ico bit-icon bit-icon--Microphone"></i>
-  <span class="bit-tgb-btx">Styled Button: Unmuted</span>
-</button>
-```
-
-**Using Custom Classes:**
-
-```html
-<button class="bit-tgb custom-class bit-tgb-pri bit-tgb-md bit-tgb-fil" type="button">
-  <i class="bit-tgb-ico bit-icon bit-icon--Microphone"></i>
-  <span class="bit-tgb-btx">Classed Button: Unmuted</span>
-</button>
-```
-
-You can also customize the internal parts (icon, text, etc.) by overriding the default CSS using the component’s style and class properties.
-
----
-
-### Binding
-
-The `BitToggleButton` supports various binding scenarios:
-
-#### Default Checked State
-
-Set the initial checked state with `DefaultIsChecked`:
-
-```razor
-<BitToggleButton DefaultIsChecked="true" />
-```
-
-#### Two-Way Binding
-
-Bind the checked state to a property:
-
-```razor
-<BitToggleButton @bind-IsChecked="isMuted" OnChange="OnToggleChanged" />
-
-@code {
-  private bool isMuted = false;
-  private void OnToggleChanged(bool newValue)
-  {
-    isMuted = newValue;
-    // Handle the state change here...
-  }
-}
-```
-
-#### Handling Change Events
-
-Display or react to changes in the toggle state:
-
-```razor
-<label>Check status is: @isMuted</label>
-<BitToggleButton IsChecked="@isMuted" OnChange="@((bool value) => isMuted = value)" />
-```
-
----
-
-### Templates
-
-Override default templates to further customize the ToggleButton appearance.
-
-```razor
-<BitToggleButton>
-  <HeaderTemplate>
-    <div style="font-weight: bold;">Custom Toggle Header</div>
-  </HeaderTemplate>
-  <ChildContent>
-    <BitToggleButtonOption Text="Option 1" />
-    <BitToggleButtonOption Text="Option 2" />
-  </ChildContent>
-</BitToggleButton>
-```
-
----
-
-### Events
-
-Manage the events triggered by the ToggleButton.
-
-**OnClick Event:**
-
-```razor
-<BitToggleButton OnClick="HandleToggleClick">
-  <!-- Button content -->
-</BitToggleButton>
-
-@code {
-  private void HandleToggleClick(MouseEventArgs e)
-  {
-    // Process the click event
-  }
-}
-```
-
-**OnChange Event:**
-
-Use the `OnChange` event to react when the checked state changes.
-
----
-
-### RTL (Right-to-Left)
-
-For languages that require a right-to-left layout, use the `dir` attribute or set the `Dir` parameter:
-
-```razor
-<BitToggleButton dir="rtl" Text="صدا وصل">
-  <BitToggleButtonOption Text="گزینه ۱" />
-  <BitToggleButtonOption Text="گزینه ۲" />
-</BitToggleButton>
-```
+## Usage Examples
+
+**1. Basic**
+
+* **Description**: A standard toggle button showing different text and icons based on its checked state.
+* **Code**:
+
+    ```cshtml
+    <BitToggleButton OffText="Unmuted" OffIconName="@BitIconName.Microphone"
+                     OnText="Muted" OnIconName="@BitIconName.MicOff" />
+    ```
+
+**2. Variant**
+
+* **Description**: Shows the three visual variants: `Fill` (default), `Outline`, and `Text`, in both enabled and disabled states.
+* **Code**:
+
+    ```cshtml
+    <BitToggleButton Variant="BitVariant.Fill">Fill</BitToggleButton>
+    <BitToggleButton Variant="BitVariant.Outline">Outline</BitToggleButton>
+    <BitToggleButton Variant="BitVariant.Text">Text</BitToggleButton>
+
+    <BitToggleButton Variant="BitVariant.Fill" IsEnabled="false">Fill</BitToggleButton>
+    <BitToggleButton Variant="BitVariant.Outline" IsEnabled="false">Outline</BitToggleButton>
+    <BitToggleButton Variant="BitVariant.Text" IsEnabled="false">Text</BitToggleButton>
+    ```
+
+**3. Size**
+
+* **Description**: Illustrates the available sizes (`Small`, `Medium`, `Large`) for toggle buttons across different variants.
+* **Code**:
+
+    ```cshtml
+    <BitToggleButton Size="BitSize.Small" Variant="BitVariant.Fill">Small</BitToggleButton>
+    <BitToggleButton Size="BitSize.Medium" Variant="BitVariant.Fill">Medium</BitToggleButton>
+    <BitToggleButton Size="BitSize.Large" Variant="BitVariant.Fill">Large</BitToggleButton>
+
+    <BitToggleButton Size="BitSize.Small" Variant="BitVariant.Outline">Small</BitToggleButton>
+    <BitToggleButton Size="BitSize.Medium" Variant="BitVariant.Outline">Medium</BitToggleButton>
+    <BitToggleButton Size="BitSize.Large" Variant="BitVariant.Outline">Large</BitToggleButton>
+
+    <BitToggleButton Size="BitSize.Small" Variant="BitVariant.Text">Small</BitToggleButton>
+    <BitToggleButton Size="BitSize.Medium" Variant="BitVariant.Text">Medium</BitToggleButton>
+    <BitToggleButton Size="BitSize.Large" Variant="BitVariant.Text">Large</BitToggleButton>
+    ```
+
+**4. Color**
+
+* **Description**: Displays toggle buttons using various `BitColor` options (`Primary`, `Secondary`, `Tertiary`, `Info`, `Success`, `Warning`, `SevereWarning`, `Error`, and background/foreground/border variations) across different variants (`Fill`, `Outline`, `Text`).
+* **Code**: (Shows pattern for one color - Primary)
+
+    ```cshtml
+    <BitToggleButton Variant="BitVariant.Fill" Color="BitColor.Primary">Primary</BitToggleButton>
+    <BitToggleButton Variant="BitVariant.Outline" Color="BitColor.Primary">Primary</BitToggleButton>
+    <BitToggleButton Variant="BitVariant.Text" Color="BitColor.Primary">Primary</BitToggleButton>
+
+    @* ... other colors follow the same pattern ... *@
+    ```
+
+**5. Style & Class**
+
+* **Description**: Demonstrates applying custom `Style` and `Class` attributes to the root component, and using the `Styles` and `Classes` parameters to target specific internal elements (like Root, Checked state, Icon, Text) for advanced customization.
+* **Code**: (Includes CSS for context)
+
+    ```css
+    .custom-class {
+        border-radius: 1rem;
+        border-color: blueviolet;
+        transition: background-color 1s;
+        background: linear-gradient(90deg, magenta, transparent) blue;
+    }
+    .custom-class:hover {
+        border-color: magenta;
+        background-color: magenta;
+    }
+    .custom-root { /* Styles for Classes parameter example */
+        border: none;
+        color: blueviolet;
+        background: transparent;
+    }
+    .custom-text { /* Styles for Classes parameter example */
+        position: relative;
+    }
+    .custom-root:hover .custom-text { color: darkviolet; }
+    .custom-text::after { /* Underline effect */
+        content: ''; left: 0; width: 0; height: 2px; bottom: -6px;
+        position: absolute; transition: 0.3s ease;
+        background: linear-gradient(90deg, #ff00cc, #3333ff);
+    }
+    .custom-icon { color: hotpink; }
+    .custom-checked { /* Styles for checked state via Classes parameter */
+        border: none; background-color: transparent;
+    }
+    .custom-checked .custom-text::after { width: 100%; }
+    .custom-checked .custom-icon { color: hotpink; }
+    ```
+
+    ```cshtml
+    <BitToggleButton Style="background-color: transparent; border-color: blueviolet; color: blueviolet;"
+                     Variant="BitVariant.Outline"
+                     OffText="Styled Button: Unmuted" OffIconName="@BitIconName.Microphone"
+                     OnText="Styled Button: Muted" OnIconName="@BitIconName.MicOff" />
+
+    <BitToggleButton Class="custom-class"
+                     OffText="Classed Button: Unmuted" OffIconName="@BitIconName.Microphone"
+                     OnText="Classed Button: Muted" OnIconName="@BitIconName.MicOff" />
+
+
+    <BitToggleButton OffText="Styled Button: Unmuted" OffIconName="@BitIconName.Microphone"
+                     OnText="Styled Button: Muted" OnIconName="@BitIconName.MicOff"
+                     Styles="@(new() { Root = "--toggle-background: pink; background: var(--toggle-background); border: none;",
+                                       Checked = "--toggle-background: peachpuff;",
+                                       Icon = "color: red;",
+                                       Text = "color: tomato;" })" />
+
+    <BitToggleButton Variant="BitVariant.Text"
+                     OffText="Classed Button: Unmuted" OffIconName="@BitIconName.Microphone"
+                     OnText="Classed Button: Muted" OnIconName="@BitIconName.MicOff"
+                     Classes="@(new() { Root = "custom-root",
+                                        Checked = "custom-checked",
+                                        Container = "custom-content", // Note: Container class mentioned in example, maps to internal structure
+                                        Icon = "custom-icon",
+                                        Text = "custom-text" })" />
+    ```
+
+**6. Binding**
+
+* **Description**: Shows different ways to manage the button's checked state: using `DefaultIsChecked` for initial state, two-way binding with `@bind-IsChecked`, and handling the `OnChange` event.
+* **Code**:
+
+    ```cshtml
+    <BitToggleButton DefaultIsChecked="true"
+                     OffText="Unmuted" OnText="Muted"
+                     OffIconName="@BitIconName.Microphone" OnIconName="@BitIconName.MicOff" />
+
+    <BitToggleButton @bind-IsChecked="example51Value"
+                     Text="@(example51Value ? "Muted" : "Unmuted")"
+                     IconName="@(example51Value ? BitIconName.MicOff : BitIconName.Microphone)" />
+    <BitCheckbox Label="Checked Toggle Button" @bind-Value="example51Value" />
+
+    <BitToggleButton OnChange="v => example52Value = v"
+                     OffText="Unmuted" OnText="Muted"
+                     OffIconName="@BitIconName.Microphone" OnIconName="@BitIconName.MicOff" />
+    <BitLabel>Check status is: @example52Value</BitLabel>
+    ```
+
+    ```csharp
+    @code {
+        private bool example51Value;
+        private bool example52Value;
+    }
+    ```
+
+**7. Templates**
+
+* **Description**: Shows how to provide custom content (`ChildContent`) inside the toggle button instead of relying solely on text/icon parameters.
+* **Code**: (Includes CSS for context)
+
+    ```css
+    .custom-content { /* Example class used in template */
+        gap: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+    ```
+
+    ```cshtml
+    <BitToggleButton Class="custom-content">
+        <BitIcon IconName="@BitIconName.Airplane" />
+        <span>Custom template</span>
+        <BitRollerLoading CustomSize="20" Color="BitColor.Tertiary" />
+    </BitToggleButton>
+    ```
+
+**8. Events**
+
+* **Description**: Demonstrates handling the `OnClick` event.
+* **Code**:
+
+    ```cshtml
+    <BitToggleButton OnClick="() => clickCounter++">Click me (@clickCounter)</BitToggleButton>
+    ```
+
+    ```csharp
+    @code {
+        private int clickCounter;
+    }
+    ```
+
+**9. RTL**
+
+* **Description**: Demonstrates using `Dir="BitDir.Rtl"` to render the component in a right-to-left layout.
+* **Code**:
+
+    ```cshtml
+    <BitToggleButton Dir="BitDir.Rtl" Variant="BitVariant.Fill"
+                     OffText="صدا وصل" OffIconName="@BitIconName.Microphone"
+                     OnText="صدا قطع" OnIconName="@BitIconName.MicOff" />
+
+    <BitToggleButton Dir="BitDir.Rtl" Variant="BitVariant.Outline"
+                     OffText="صدا وصل" OffIconName="@BitIconName.Microphone"
+                     OnText="صدا قطع" OnIconName="@BitIconName.MicOff" />
+
+    <BitToggleButton Dir="BitDir.Rtl" Variant="BitVariant.Text"
+                     OffText="صدا وصل" OffIconName="@BitIconName.Microphone"
+                     OnText="صدا قطع" OnIconName="@BitIconName.MicOff" />
+    ```
 
 ---
 
 ## API Reference
 
-### BitToggleButton Parameters
+**BitToggleButton Parameters**
 
-| **Name**              | **Type**                           | **Default Value**           | **Description**                                                                                   |
-|-----------------------|------------------------------------|-----------------------------|---------------------------------------------------------------------------------------------------|
-| `AllowDisabledFocus`  | `bool`                           | `false`                     | Determines whether the toggle button can receive focus when disabled.                             |
-| `AriaDescription`     | `string?`                        | `null`                      | Detailed description for screen readers.                                                         |
-| `AriaHidden`          | `bool`                           | `false`                     | If true, adds an `aria-hidden` attribute so screen readers ignore the button.                      |
-| `ChildContent`        | `RenderFragment?`                | `null`                      | Content to display inside the toggle button.                                                     |
-| `Classes`             | `BitToggleButtonClassStyles?`    | `null`                      | Custom CSS classes for various parts of the toggle button.                                        |
-| `Color`               | `BitColor?`                      | `null`                      | Sets the general color theme of the toggle button.                                               |
-| `DefaultIsChecked`    | `bool?`                         | `null`                      | The initial checked state of the toggle button.                                                  |
-| `IconName`            | `string?`                        | `null`                      | Icon displayed when the toggle button is in its default state.                                   |
-| `IsChecked`           | `bool`                           | `false`                     | Indicates whether the toggle button is checked.                                                  |
-| `OnChange`            | `EventCallback<bool>`            | —                           | Callback invoked when the `IsChecked` state changes.                                             |
-| `OnClick`             | `EventCallback<MouseEventArgs>`  | —                           | Callback invoked when the toggle button is clicked.                                              |
-| `OffIconName`         | `string?`                        | `null`                      | Icon displayed when the toggle button is not checked.                                            |
-| `OffText`             | `string?`                        | `null`                      | Text displayed when the toggle button is not checked.                                            |
-| `OffTitle`            | `string?`                        | `null`                      | Tooltip text when the toggle button is not checked.                                              |
-| `OnIconName`          | `string?`                        | `null`                      | Icon displayed when the toggle button is checked.                                                |
-| `OnText`              | `string?`                        | `null`                      | Text displayed when the toggle button is checked.                                                |
-| `OnTitle`             | `string?`                        | `null`                      | Tooltip text when the toggle button is checked.                                                  |
-| `Size`                | `BitSize?`                       | `null`                      | The size of the toggle button (Small, Medium, Large).                                            |
-| `Styles`              | `BitToggleButtonClassStyles?`    | `null`                      | Custom CSS styles for various parts of the toggle button.                                        |
-| `Text`                | `string?`                        | `null`                      | The text label of the toggle button.                                                             |
-| `Title`               | `string?`                        | `null`                      | Tooltip text for the toggle button.                                                              |
-| `Variant`             | `BitVariant?`                    | `null`                      | Visual variant of the toggle button (Fill, Outline, Text).                                       |
+| Name               | Type                          | Default | Description                                                                    |
+| :----------------- | :---------------------------- | :------ | :----------------------------------------------------------------------------- |
+| `AllowDisabledFocus`| `bool`                        | `false` | Whether the button can have focus in disabled mode.                            |
+| `AriaDescription`  | `string?`                     | `null`  | Detailed description for screen readers.                                       |
+| `AriaHidden`       | `bool`                        | `false` | If true, hides the element from screen readers.                              |
+| `ChildContent`     | `RenderFragment?`             | `null`  | Custom content for the button (overrides Text/Icon parameters).              |
+| `Classes`          | `BitToggleButtonClassStyles?` | `null`  | Custom CSS classes for different parts (Root, Checked, Icon, Text).          |
+| `Color`            | `BitColor?`                   | `null`  | General color of the button.                                                   |
+| `DefaultIsChecked` | `bool?`                       | `null`  | Initial checked state (uncontrolled).                                        |
+| `IconName`         | `string?`                     | `null`  | Icon name rendered inside the button (used if On/OffIconName are not set).   |
+| `IsChecked`        | `bool`                        | `false` | Checked state (use `@bind-IsChecked` for two-way binding).                   |
+| `OnChange`         | `EventCallback<bool>`         |         | Callback when the `IsChecked` value changes.                                 |
+| `OnClick`          | `EventCallback<MouseEventArgs>`|         | Callback when the button is clicked.                                         |
+| `OffIconName`      | `string?`                     |         | Icon displayed when `IsChecked` is false.                                    |
+| `OffText`          | `string?`                     |         | Text displayed when `IsChecked` is false.                                    |
+| `OffTitle`         | `string?`                     |         | Title (tooltip) displayed when `IsChecked` is false.                           |
+| `OnIconName`       | `string?`                     |         | Icon displayed when `IsChecked` is true.                                     |
+| `OnText`           | `string?`                     |         | Text displayed when `IsChecked` is true.                                     |
+| `OnTitle`          | `string?`                     |         | Title (tooltip) displayed when `IsChecked` is true.                            |
+| `Size`             | `BitSize?`                    | `null`  | Size of the button (`Small`, `Medium`, `Large`).                               |
+| `Styles`           | `BitToggleButtonClassStyles?` | `null`  | Custom CSS styles for different parts (Root, Checked, Icon, Text).           |
+| `Text`             | `string?`                     | `null`  | Text displayed (used if On/OffText are not set, or `ChildContent` is null).  |
+| `Title`            | `string?`                     | `null`  | Title (tooltip) displayed (used if On/OffTitle are not set).                 |
+| `Variant`          | `BitVariant?`                 | `null`  | Visual variant (`Fill`, `Outline`, `Text`).                                    |
+| *(Inherited)*      | *(See BitComponentBase)*      |         |                                                                                |
 
-### BitComponentBase Parameters
+**BitComponentBase Parameters (Inherited)**
 
-Inherited from the base component:
+| Name           | Type                         | Default                   | Description                                                           |
+| :------------- | :--------------------------- | :------------------------ | :-------------------------------------------------------------------- |
+| `AriaLabel`    | `string?`                    | `null`                    | Aria-label for accessibility.                                         |
+| `Class`        | `string?`                    | `null`                    | Custom CSS class for the root element.                                |
+| `Dir`          | `BitDir?`                    | `null`                    | Component direction (`Ltr`, `Rtl`, `Auto`).                           |
+| `HtmlAttributes`| `Dictionary<string, object>` | `new Dictionary<>()`      | Additional HTML attributes to render.                                 |
+| `Id`           | `string?`                    | `null`                    | Custom ID for the root element (defaults to `UniqueId`).              |
+| `IsEnabled`    | `bool`                       | `true`                    | Whether the component is enabled.                                     |
+| `Style`        | `string?`                    | `null`                    | Custom CSS style for the root element.                                |
+| `Visibility`   | `BitVisibility`              | `BitVisibility.Visible`   | Component visibility (`Visible`, `Hidden`, `Collapsed`).              |
 
-| **Name**         | **Type**                           | **Default Value**                        | **Description**                                                                   |
-|------------------|------------------------------------|------------------------------------------|-----------------------------------------------------------------------------------|
-| `AriaLabel`      | `string?`                          | `null`                                   | Aria-label for the component.                                                     |
-| `Class`          | `string?`                          | `null`                                   | Custom CSS class for the root element.                                            |
-| `Dir`            | `BitDir?`                          | `null`                                   | Specifies the component direction (LTR, RTL, Auto).                              |
-| `HtmlAttributes` | `Dictionary<string, object>`       | `new Dictionary<string, object>()`       | Additional HTML attributes for the root element.                                  |
-| `Id`             | `string?`                          | `null`                                   | Custom id; if null, a unique id is generated.                                     |
-| `IsEnabled`      | `bool`                             | `true`                                   | Indicates whether the component is enabled.                                       |
-| `Style`          | `string?`                          | `null`                                   | Inline CSS styles for the component.                                              |
-| `Visibility`     | `BitVisibility`                    | `BitVisibility.Visible`                  | Visibility state (Visible, Hidden, Collapsed).                                    |
+**BitComponentBase Public Members (Inherited)**
 
-### Public Members (BitComponentBase)
+| Name        | Type               | Default          | Description                                       |
+| :---------- | :----------------- | :--------------- | :------------------------------------------------ |
+| `UniqueId`  | `Guid`             | `Guid.NewGuid()` | Readonly unique ID assigned at construction.      |
+| `RootElement` | `ElementReference` |                  | `ElementReference` for the root DOM element.    |
 
-| **Name**     | **Type**             | **Default Value**         | **Description**                                                     |
-|--------------|----------------------|---------------------------|---------------------------------------------------------------------|
-| `UniqueId`   | `Guid`               | `Guid.NewGuid()`          | Read-only unique id assigned during component construction.        |
-| `RootElement`| `ElementReference`   | —                         | Reference to the component's root HTML element.                     |
+**BitToggleButtonClassStyles Properties (for `Classes`/`Styles`)**
 
-### BitToggleButtonClassStyles Properties
+| Name    | Type      | Default | Description                                                |
+| :------ | :-------- | :------ | :--------------------------------------------------------- |
+| `Root`    | `string?` | `null`  | Custom CSS class/style for the root `<button>` element.  |
+| `Checked` | `string?` | `null`  | Custom CSS class/style applied when the button is checked. |
+| `Icon`    | `string?` | `null`  | Custom CSS class/style for the icon element (`<i>`).      |
+| `Text`    | `string?` | `null`  | Custom CSS class/style for the text element (`<span>`).   |
 
-Customize internal styling of the toggle button:
+**Enums**
 
-| **Name**  | **Type**  | **Default Value** | **Description**                                                         |
-|-----------|-----------|-------------------|-------------------------------------------------------------------------|
-| `Root`    | `string?` | `null`            | Custom CSS classes/styles for the root element.                         |
-| `Checked` | `string?` | `null`            | Styles for the checked state.                                           |
-| `Icon`    | `string?` | `null`            | Styles for the icon element.                                            |
-| `Text`    | `string?` | `null`            | Styles for the text element.                                            |
-
----
-
-## Enumerations
-
-### BitButtonType Enum
-
-| **Name**  | **Value** | **Description**                     |
-|-----------|-----------|-------------------------------------|
-| `Button`  | `0`       | Standard clickable button.          |
-| `Submit`  | `1`       | A button that submits form data.    |
-| `Reset`   | `2`       | A button that resets form data.     |
-
-### BitColor Enum
-
-| **Name**              | **Value** | **Description**                                    |
-|-----------------------|-----------|----------------------------------------------------|
-| `Primary`             | `0`       | Primary (default) color.                           |
-| `Secondary`           | `1`       | Secondary color.                                   |
-| `Tertiary`            | `2`       | Tertiary color.                                    |
-| `Info`                | `3`       | Info color.                                        |
-| `Success`             | `4`       | Success color.                                     |
-| `Warning`             | `5`       | Warning color.                                     |
-| `SevereWarning`       | `6`       | Severe warning color.                              |
-| `Error`               | `7`       | Error color.                                       |
-| `PrimaryBackground`   | `8`       | Primary background color.                          |
-| `SecondaryBackground` | `9`       | Secondary background color.                        |
-| `TertiaryBackground`  | `10`      | Tertiary background color.                         |
-| `PrimaryForeground`   | `11`      | Primary foreground color.                          |
-| `SecondaryForeground` | `12`      | Secondary foreground color.                        |
-| `TertiaryForeground`  | `13`      | Tertiary foreground color.                         |
-| `PrimaryBorder`       | `14`      | Primary border color.                              |
-| `SecondaryBorder`     | `15`      | Secondary border color.                            |
-| `TertiaryBorder`      | `16`      | Tertiary border color.                             |
-
-### BitSize Enum
-
-| **Name**  | **Value** | **Description**           |
-|-----------|-----------|---------------------------|
-| `Small`   | `0`       | Small size.               |
-| `Medium`  | `1`       | Medium size (default).    |
-| `Large`   | `2`       | Large size.               |
-
-### BitVariant Enum
-
-| **Name**  | **Value** | **Description**             |
-|-----------|-----------|-----------------------------|
-| `Fill`    | `0`       | Fill style variant.         |
-| `Outline` | `1`       | Outline style variant.      |
-| `Text`    | `2`       | Text style variant.         |
-
-### BitVisibility Enum
-
-| **Name**    | **Value** | **Description**                                                 |
-|-------------|-----------|-----------------------------------------------------------------|
-| `Visible`   | `0`       | The component is visible.                                       |
-| `Hidden`    | `1`       | The component is hidden (using `visibility: hidden`).           |
-| `Collapsed` | `2`       | The component is collapsed (using `display: none`).             |
-
-### BitDir Enum
-
-| **Name** | **Value** | **Description**                                                                        |
-|----------|-----------|----------------------------------------------------------------------------------------|
-| `Ltr`    | `0`       | Left-to-right direction (for languages like English).                                  |
-| `Rtl`    | `1`       | Right-to-left direction (for languages like Arabic).                                   |
-| `Auto`   | `2`       | Automatically determines direction based on the content.                               |
+* **BitColor**: Defines color options (`Primary`, `Secondary`, `Tertiary`, `Info`, `Success`, `Warning`, `SevereWarning`, `Error`, `PrimaryBackground`, `SecondaryBackground`, `TertiaryBackground`, `PrimaryForeground`, `SecondaryForeground`, `TertiaryForeground`, `PrimaryBorder`, `SecondaryBorder`, `TertiaryBorder`).
+* **BitSize**: Defines size options (`Small`, `Medium`, `Large`).
+* **BitVariant**: Defines visual styles (`Fill`, `Outline`, `Text`).
+* **BitVisibility**: Defines visibility states (`Visible`, `Hidden`, `Collapsed`).
+* **BitDir**: Defines text direction (`Ltr`, `Rtl`, `Auto`).
 
 ---
+
+## Feedback
+
+* Provide feedback via the **GitHub repo**: [File an Issue](https://github.com/bitfoundation/bitplatform/issues/new/choose) or [Start a Discussion](https://github.com/bitfoundation/bitplatform/discussions/new/choose).
+* Review/Edit this demo page: [Review](https://github.com/bitfoundation/bitplatform/blob/develop/src/BlazorUI/Demo/Client/Bit.BlazorUI.Demo.Client.Core/Pages/Components/Buttons/ToggleButton/BitToggleButtonDemo.razor) / [Edit](https://github.com/bitfoundation/bitplatform/edit/develop/src/BlazorUI/Demo/Client/Bit.BlazorUI.Demo.Client.Core/Pages/Components/Buttons/ToggleButton/BitToggleButtonDemo.razor)
+* Review/Edit the component source: [Review](https://github.com/bitfoundation/bitplatform/blob/develop/src/BlazorUI/Bit.BlazorUI/Components/Buttons/ToggleButton/BitToggleButton.razor) / [Edit](https://github.com/bitfoundation/bitplatform/edit/develop/src/BlazorUI/Bit.BlazorUI/Components/Buttons/ToggleButton/BitToggleButton.razor)
